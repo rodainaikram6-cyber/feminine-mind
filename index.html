@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#8f7ab8">
+  <meta name="description" content="Féminine Mind — منصة عربية للوعي الذاتي والعلاقات والتعافي النفسي.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <title>Féminine Mind | سيكولوجيا الأنوثة</title>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">FM</div>
+      <div><strong>Féminine Mind</strong><span>سيكولوجيا الأنوثة</span></div>
+    </div>
+    <button class="icon-btn" id="themeBtn" aria-label="تبديل المظهر">☼</button>
+  </header>
+
+  <main id="app" class="content"></main>
+
+  <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+    <button data-route="home">⌂<span>الرئيسية</span></button>
+    <button data-route="chat">♡<span>المحادثة</span></button>
+    <button data-route="library">▤<span>المحتوى</span></button>
+    <button data-route="tests">◌<span>الاختبارات</span></button>
+    <button data-route="profile">○<span>حسابي</span></button>
+  </nav>
+</div>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
