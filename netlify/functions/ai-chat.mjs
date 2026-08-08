@@ -137,8 +137,6 @@ export default async (req) => {
     return Response.json({ text });
   } catch (error) {
     console.error("AI chat error:", error);
-
-Me_rita, [08.08.2026 15:39]
 return Response.json(
       {
         error: "Server error"
