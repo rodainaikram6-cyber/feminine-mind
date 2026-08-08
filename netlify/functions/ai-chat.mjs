@@ -17,7 +17,6 @@ export default async (req) => {
 
   try {
     const body = await req.json();
-
     const message = body?.message;
     const history = Array.isArray(body?.history) ? body.history : [];
 
@@ -84,11 +83,6 @@ export default async (req) => {
 ;
 
     const contents = [
-      {
-        role: "user",
-        parts: [{ text: systemInstruction }]
-      },
-
       ...history.slice(-8).map((item) => ({
         role: item?.role === "assistant" ? "model" : "user",
         parts: [
@@ -97,7 +91,6 @@ export default async (req) => {
           }
         ]
       })),
-
       {
         role: "user",
         parts: [{ text: message }]
@@ -113,6 +106,13 @@ export default async (req) => {
           "x-goog-api-key": key
         },
         body: JSON.stringify({
+          systemInstruction: {
+            parts: [
+              {
+                text: systemInstruction
+              }
+            ]
+          },
           contents
         })
       }
@@ -138,7 +138,6 @@ export default async (req) => {
       "تعذر إنشاء الرد الآن.";
 
     return Response.json({ text });
-
   } catch (error) {
     console.error("AI chat error:", error);
 
