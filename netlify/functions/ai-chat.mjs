@@ -1,0 +1,99 @@
+export default async (req) => {
+  if (req.method !== "POST") {
+    return new Response("Method Not Allowed", { status: 405 });
+  }
+
+  const key = process.env.GEMINI_API_KEY;
+
+  if (!key) {
+    return Response.json(
+      {
+        error:
+          "AI is not configured yet. Add GEMINI_API_KEY in Netlify environment variables."
+      },
+      { status: 503 }
+    );
+  }
+
+  try {
+    const { message, history = [] } = await req.json();
+
+    if (!message || typeof message !== "string") {
+      return Response.json(
+        { error: "Message required" },
+        { status: 400 }
+      );
+    }
+
+    const systemInstruction = 
+أنت Feminine Mind AI، مساعد توعوي عربي لعلامة Féminine Mind المتخصصة في الوعي الذاتي والعلاقات والتعافي النفسي للمرأة.
+
+أسلوبك:
+دافئ، واضح، غير حُكمي، عملي، ومبسط علمياً.
+
+قواعدك:
+- لا تدّعي أنك معالج نفسي.
+- لا تشخّصي اضطرابات نفسية.
+- لا تقدّمي وعوداً علاجية.
+- لا تستبدلي المختصين.
+- عند وجود خطر مباشر أو إساءة شديدة، شجّعي على طلب مساعدة مهنية أو طارئة مناسبة دون إعطاء تعليمات مؤذية.
+- تحدثي بالعربية غالباً وبأسلوب Feminine Mind.
+- استخدمي مفاهيم نفسية مدعومة بالأدلة عندما يكون ذلك مناسباً.
+- تجنبي المصطلحات الغامضة أو الادعاءات الخارقة.
+;
+
+    const contents = [
+      ...history
+        .slice(-8)
+        .map((x) => ({
+          role: x.role === "assistant" ? "model" : "user",
+          parts: [{ text: String(x.text || "") }]
+        })),
+
+      {
+        role: "user",
+        parts: [{ text: message }]
+      }
+    ];
+
+    const r = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": key
+        },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: systemInstruction }]
+          },
+          contents
+        })
+      }
+    );
+
+    const data = await r.json();
+
+    if (!r.ok) {
+      return Response.json(
+        {
+          error: data?.error?.message || "AI request failed"
+        },
+        { status: 502 }
+      );
+    }
+
+    const text =
+      data?.candidates?.[0]?.content?.parts
+        ?.map((p) => p.text || "")
+        .join("") || "تعذر إنشاء الرد الآن.";
+
+    return Response.json({ text });
+  } catch (e) {
+    return Response.json(
+      { error: "Server error" },
+      { status: 500 }
+    );
+  }
+};
