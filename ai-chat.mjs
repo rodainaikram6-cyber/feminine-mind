@@ -1,6 +1,6 @@
 export default async (req) => {
   if (req.method !== "POST") return new Response("Method Not Allowed", {status:405});
-  const key = Netlify.env.get("GEMINI_API_KEY");
+  const key = process.env.GEMINI_API_KEY;
   if (!key) return Response.json({error:"AI is not configured yet. Add GEMINI_API_KEY in Netlify environment variables."},{status:503});
   try {
     const {message, history=[]} = await req.json();
