@@ -1,4 +1,4 @@
-Me_rita, [08.08.2026 15:30]
+export default async (req) => {
 export default async (req) => {
   if (req.method !== "POST") {
     return new Response("Method Not Allowed", { status: 405 });
