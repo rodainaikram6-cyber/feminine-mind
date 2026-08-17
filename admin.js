@@ -1,8 +1,9 @@
 const root = document.querySelector("#admin");
 const KEY = "fm_state";
+const PRODUCTS_KEY = "fm_products";
 
 /* =========================
-   BASIC DATA
+   FOUNDER PROFILE
 ========================= */
 
 const founder = {
@@ -14,53 +15,50 @@ const founder = {
   country: ""
 };
 
-const products = [
+/* =========================
+   DEFAULT PRODUCTS
+========================= */
+
+const defaultProducts = [
   {
+    id: 1,
     type: "دورات",
     title: "الدورات التدريبية",
-    status: "جاهز للتوسع",
-    icon: "🎓"
+    description: "برامج تدريبية متكاملة في الوعي الذاتي والعلاقات والأنوثة.",
+    price: 0,
+    oldPrice: 0,
+    access: "مدفوع",
+    status: "مسودة"
   },
   {
+    id: 2,
     type: "كتب",
     title: "الكتب الإلكترونية",
-    status: "جاهز للتوسع",
-    icon: "📚"
+    description: "كتب رقمية تساعد المرأة على فهم ذاتها وبناء حياة أكثر وعيًا.",
+    price: 0,
+    oldPrice: 0,
+    access: "مدفوع",
+    status: "مسودة"
   },
   {
+    id: 3,
     type: "Workbooks",
     title: "الملفات والـ Workbooks",
-    status: "جاهز للتوسع",
-    icon: "📄"
+    description: "ملفات وتمارين عملية قابلة للتحميل والاستخدام.",
+    price: 0,
+    oldPrice: 0,
+    access: "مدفوع",
+    status: "مسودة"
   },
   {
+    id: 4,
     type: "Premium",
     title: "عضوية Premium",
-    status: "جاهز للتوسع",
-    icon: "💎"
-  }
-];
-
-const services = [
-  {
-    title: "الجلسات الفردية",
-    status: "جاهز للتوسع",
-    icon: "💗"
-  },
-  {
-    title: "جلسات العلاقات",
-    status: "جاهز للتوسع",
-    icon: "💑"
-  },
-  {
-    title: "ورش العمل",
-    status: "جاهز للتوسع",
-    icon: "👩‍🏫"
-  },
-  {
-    title: "الباقات والبرامج",
-    status: "جاهز للتوسع",
-    icon: "🎁"
+    description: "محتوى وتجارب متقدمة ومزايا خاصة للمشتركات.",
+    price: 0,
+    oldPrice: 0,
+    access: "Premium",
+    status: "مسودة"
   }
 ];
 
@@ -88,8 +86,31 @@ function save(data) {
   localStorage.setItem(KEY, JSON.stringify(data));
 }
 
+function getProducts() {
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(PRODUCTS_KEY) || "null"
+    );
+
+    if (Array.isArray(saved)) {
+      return saved;
+    }
+
+    return defaultProducts;
+  } catch {
+    return defaultProducts;
+  }
+}
+
+function saveProducts(products) {
+  localStorage.setItem(
+    PRODUCTS_KEY,
+    JSON.stringify(products)
+  );
+}
+
 /* =========================
-   SECURITY DISPLAY
+   ESCAPE HTML
 ========================= */
 
 function esc(value) {
@@ -130,8 +151,6 @@ function showLogin() {
 
       <p>
         هذه لوحة الإدارة التجريبية للمؤسسة.
-        سيتم لاحقًا ربطها بنظام مصادقة آمن عند
-        إضافة نظام الحسابات والدفع الحقيقي.
       </p>
 
       <div class="field">
@@ -166,13 +185,11 @@ function showLogin() {
     </div>
   `;
 
-  document.querySelector("#loginBtn").onclick =
-    login;
+  document.querySelector("#loginBtn").onclick = login;
 
-  document.querySelector("#backHome").onclick =
-    () => {
-      location.href = "index.html";
-    };
+  document.querySelector("#backHome").onclick = () => {
+    location.href = "index.html";
+  };
 
   document.querySelector("#pass").addEventListener(
     "keydown",
@@ -203,20 +220,17 @@ function login() {
 
 function dashboard() {
   const state = get();
+  const products = getProducts();
 
-  const articleCount =
-    Array.isArray(state.articles)
-      ? state.articles.length
-      : 0;
+  const articleCount = Array.isArray(state.articles)
+    ? state.articles.length
+    : 0;
 
-  const affirmationCount =
-    Array.isArray(state.affirmations)
-      ? state.affirmations.length
-      : 0;
+  const affirmationCount = Array.isArray(state.affirmations)
+    ? state.affirmations.length
+    : 0;
 
   root.innerHTML = `
-
-    <!-- HEADER -->
 
     <div class="hero">
 
@@ -239,9 +253,7 @@ function dashboard() {
     <!-- FOUNDER PROFILE -->
 
     <div class="section-title">
-      <h2>
-        👑 ملف المؤسسة
-      </h2>
+      <h2>👑 ملف المؤسسة</h2>
     </div>
 
     <div class="card">
@@ -275,132 +287,253 @@ function dashboard() {
         </a>
       </p>
 
-      ${
-        founder.email
-          ? `<p>البريد: ${esc(founder.email)}</p>`
-          : ""
-      }
-
-      ${
-        founder.phone
-          ? `<p>الهاتف: ${esc(founder.phone)}</p>`
-          : ""
-      }
-
-      ${
-        founder.country
-          ? `<p>الموقع: ${esc(founder.country)}</p>`
-          : ""
-      }
-
     </div>
 
 
     <!-- OVERVIEW -->
 
     <div class="section-title">
-      <h2>
-        📊 نظرة عامة
-      </h2>
+      <h2>📊 نظرة عامة</h2>
     </div>
 
     <div class="grid">
 
       <div class="card">
-        <span class="pill">
-          المقالات
-        </span>
-
-        <h3>
-          ${articleCount}
-        </h3>
-
-        <p>
-          عدد المقالات الحالية
-        </p>
+        <span class="pill">المقالات</span>
+        <h3>${articleCount}</h3>
+        <p>عدد المقالات الحالية</p>
       </div>
 
       <div class="card">
-        <span class="pill">
-          التوكيدات
-        </span>
-
-        <h3>
-          ${affirmationCount}
-        </h3>
-
-        <p>
-          عدد التوكيدات الحالية
-        </p>
+        <span class="pill">التوكيدات</span>
+        <h3>${affirmationCount}</h3>
+        <p>عدد التوكيدات الحالية</p>
       </div>
 
       <div class="card">
-        <span class="pill premium">
-          المنتجات
-        </span>
-
-        <h3>
-          ${products.length}
-        </h3>
-
-        <p>
-          مصادر منتجات رقمية قابلة للتطوير
-        </p>
+        <span class="pill premium">المنتجات</span>
+        <h3>${products.length}</h3>
+        <p>عدد المنتجات في المتجر</p>
       </div>
 
       <div class="card">
-        <span class="pill">
-          الخدمات
-        </span>
-
-        <h3>
-          ${services.length}
-        </h3>
-
-        <p>
-          خدمات قابلة للتحويل إلى مصادر دخل
-        </p>
+        <span class="pill">الخدمات</span>
+        <h3>4</h3>
+        <p>خدمات قابلة للتحويل إلى مصادر دخل</p>
       </div>
 
     </div>
 
 
-    <!-- DIGITAL PRODUCTS -->
+    <!-- STORE -->
 
     <div class="section-title">
-      <h2>
-        💰 المنتجات الرقمية
-      </h2>
+      <h2>🛍️ متجر Féminine Mind</h2>
+    </div>
+
+    <div class="card">
+
+      <p>
+        من هنا يمكنكِ إدارة المنتجات الرقمية التي
+        سيتم عرضها وبيعها مستقبلًا داخل المنصة.
+      </p>
+
+      <span class="pill premium">
+        متجر جاهز للتطوير
+      </span>
+
+    </div>
+
+
+    <!-- ADD PRODUCT -->
+
+    <div class="section-title">
+      <h2>➕ إضافة منتج</h2>
+    </div>
+
+    <div class="card">
+
+      <div class="field">
+        <label>اسم المنتج</label>
+
+        <input
+          id="productTitle"
+          class="input"
+          placeholder="مثال: دورة حب الذات"
+        >
+      </div>
+
+
+      <div class="field">
+        <label>نوع المنتج</label>
+
+        <select
+          id="productType"
+          class="input"
+        >
+          <option value="دورات">🎓 دورة تدريبية</option>
+          <option value="كتب">📚 كتاب إلكتروني</option>
+          <option value="Workbooks">📄 Workbook</option>
+          <option value="Premium">💎 Premium</option>
+          <option value="باقات">🎁 باقة</option>
+        </select>
+      </div>
+
+
+      <div class="field">
+        <label>وصف المنتج</label>
+
+        <textarea
+          id="productDescription"
+          class="input"
+          rows="4"
+          placeholder="اكتبي وصفًا مختصرًا للمنتج..."
+        ></textarea>
+      </div>
+
+
+      <div class="field">
+        <label>السعر</label>
+
+        <input
+          id="productPrice"
+          class="input"
+          type="number"
+          min="0"
+          placeholder="مثال: 2500"
+        >
+      </div>
+
+
+      <div class="field">
+        <label>السعر قبل الخصم</label>
+
+        <input
+          id="productOldPrice"
+          class="input"
+          type="number"
+          min="0"
+          placeholder="اختياري"
+        >
+      </div>
+
+
+      <div class="field">
+        <label>نوع الوصول</label>
+
+        <select
+          id="productAccess"
+          class="input"
+        >
+          <option value="مدفوع">💰 مدفوع</option>
+          <option value="مجاني">🆓 مجاني</option>
+          <option value="Premium">💎 Premium</option>
+        </select>
+      </div>
+
+
+      <div class="field">
+        <label>حالة المنتج</label>
+
+        <select
+          id="productStatus"
+          class="input"
+        >
+          <option value="مسودة">مسودة</option>
+          <option value="منشور">منشور</option>
+        </select>
+      </div>
+
+
+      <button
+        class="btn full"
+        id="addProductBtn"
+      >
+        حفظ المنتج
+      </button>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+
+    <div class="section-title">
+      <h2>📦 المنتجات الحالية</h2>
     </div>
 
     <div class="list">
 
-      ${products
-        .map(
-          product => `
+      ${
+        products.length
+          ? products
+              .map(
+                product => `
+                  <div class="card">
+
+                    <span class="pill">
+                      ${esc(product.type)}
+                    </span>
+
+                    <h3>
+                      ${esc(product.title)}
+                    </h3>
+
+                    <p>
+                      ${esc(product.description)}
+                    </p>
+
+                    <p>
+                      السعر:
+                      <strong>
+                        ${Number(product.price || 0)}
+                      </strong>
+                    </p>
+
+                    ${
+                      Number(product.oldPrice || 0) > 0
+                        ? `
+                          <p>
+                            السعر السابق:
+                            <del>
+                              ${Number(product.oldPrice)}
+                            </del>
+                          </p>
+                        `
+                        : ""
+                    }
+
+                    <p>
+                      الوصول:
+                      ${esc(product.access)}
+                    </p>
+
+                    <span class="pill ${
+                      product.status === "منشور"
+                        ? ""
+                        : "premium"
+                    }">
+                      ${esc(product.status)}
+                    </span>
+
+                    <button
+                      class="btn secondary full deleteProduct"
+                      data-id="${product.id}"
+                    >
+                      🗑️ حذف المنتج
+                    </button>
+
+                  </div>
+                `
+              )
+              .join("")
+          : `
             <div class="card">
-
-              <span style="font-size:28px">
-                ${product.icon}
-              </span>
-
-              <h3>
-                ${esc(product.title)}
-              </h3>
-
               <p>
-                النوع:
-                ${esc(product.type)}
+                لا توجد منتجات.
               </p>
-
-              <span class="pill premium">
-                ${esc(product.status)}
-              </span>
-
             </div>
           `
-        )
-        .join("")}
+      }
 
     </div>
 
@@ -408,52 +541,41 @@ function dashboard() {
     <!-- SERVICES -->
 
     <div class="section-title">
-      <h2>
-        💗 الخدمات المدفوعة
-      </h2>
+      <h2>💗 الخدمات المدفوعة</h2>
     </div>
 
     <div class="list">
 
-      ${services
-        .map(
-          service => `
-            <div class="card">
+      <div class="card">
+        <h3>💗 الجلسات الفردية</h3>
+        <span class="pill">جاهز للتوسع</span>
+      </div>
 
-              <span style="font-size:28px">
-                ${service.icon}
-              </span>
+      <div class="card">
+        <h3>💑 جلسات العلاقات</h3>
+        <span class="pill">جاهز للتوسع</span>
+      </div>
 
-              <h3>
-                ${esc(service.title)}
-              </h3>
+      <div class="card">
+        <h3>👩‍🏫 ورش العمل</h3>
+        <span class="pill">جاهز للتوسع</span>
+      </div>
 
-              <span class="pill">
-                ${esc(service.status)}
-              </span>
-
-            </div>
-          `
-        )
-        .join("")}
+      <div class="card">
+        <h3>🎁 الباقات والبرامج</h3>
+        <span class="pill">جاهز للتوسع</span>
+      </div>
 
     </div>
 
 
-    <!-- REVENUE MODEL -->
+    <!-- REVENUE -->
 
     <div class="section-title">
-      <h2>
-        💎 مصادر الدخل المقترحة
-      </h2>
+      <h2>💎 مصادر الدخل المقترحة</h2>
     </div>
 
     <div class="card">
-
-      <p>
-        يمكن تطوير Féminine Mind مستقبلًا حول عدة
-        مصادر دخل متكاملة:
-      </p>
 
       <p>
         🎓 الدورات التدريبية
@@ -464,7 +586,7 @@ function dashboard() {
       </p>
 
       <p>
-        📄 Workbooks والملفات العلاجية
+        📄 Workbooks والملفات
       </p>
 
       <p>
@@ -494,28 +616,20 @@ function dashboard() {
     </div>
 
 
-    <!-- CONTENT MANAGEMENT -->
+    <!-- CONTENT -->
 
     <div class="section-title">
-      <h2>
-        📝 إدارة المحتوى
-      </h2>
+      <h2>📝 إدارة المحتوى</h2>
     </div>
 
 
-    <!-- ADD ARTICLE -->
-
     <div class="card">
 
-      <h3>
-        إضافة مقال
-      </h3>
+      <h3>إضافة مقال</h3>
 
       <div class="field">
 
-        <label>
-          العنوان
-        </label>
+        <label>العنوان</label>
 
         <input
           id="title"
@@ -528,9 +642,7 @@ function dashboard() {
 
       <div class="field">
 
-        <label>
-          التصنيف
-        </label>
+        <label>التصنيف</label>
 
         <input
           id="cat"
@@ -543,9 +655,7 @@ function dashboard() {
 
       <div class="field">
 
-        <label>
-          المحتوى
-        </label>
+        <label>المحتوى</label>
 
         <textarea
           id="text"
@@ -580,13 +690,9 @@ function dashboard() {
     </div>
 
 
-    <!-- ADD AFFIRMATION -->
-
     <div class="card">
 
-      <h3>
-        إضافة توكيد
-      </h3>
+      <h3>إضافة توكيد</h3>
 
       <input
         id="affirm"
@@ -607,16 +713,13 @@ function dashboard() {
     <!-- ARTICLES -->
 
     <div class="section-title">
-      <h2>
-        📚 المقالات الحالية
-      </h2>
+      <h2>📚 المقالات الحالية</h2>
     </div>
 
     <div class="list">
 
       ${
-        state.articles &&
-        state.articles.length
+        state.articles && state.articles.length
           ? state.articles
               .map(
                 article => `
@@ -661,39 +764,36 @@ function dashboard() {
     </div>
 
 
-    <!-- FUTURE MONETIZATION -->
+    <!-- FUTURE -->
 
     <div class="section-title">
-      <h2>
-        🚀 مراحل تحقيق الدخل
-      </h2>
+      <h2>🚀 مراحل تحقيق الدخل</h2>
     </div>
 
     <div class="card">
 
       <p>
-        المرحلة الحالية:
-        بناء المحتوى والهوية والمنصة.
+        ✅ المرحلة الحالية: بناء المحتوى والهوية والمنصة.
       </p>
 
       <p>
-        المرحلة التالية:
-        إضافة المنتجات الرقمية والدورات.
+        🔜 المرحلة التالية: بناء متجر المنتجات الرقمية.
       </p>
 
       <p>
-        بعدها:
-        نظام الاشتراكات والعضوية Premium.
+        🔜 بعدها: صفحات بيع الدورات والكتب والـWorkbooks.
       </p>
 
       <p>
-        ثم:
-        نظام الدفع والحجوزات والفواتير.
+        🔜 بعدها: نظام الاشتراكات والعضوية Premium.
       </p>
 
       <p>
-        ثم:
-        لوحة المبيعات والإيرادات والتحليلات.
+        🔜 ثم: نظام الدفع والحجوزات والفواتير.
+      </p>
+
+      <p>
+        🔜 ثم: لوحة المبيعات والإيرادات والتحليلات.
       </p>
 
       <span class="pill premium">
@@ -725,10 +825,17 @@ function dashboard() {
 }
 
 /* =========================
-   DASHBOARD EVENTS
+   EVENTS
 ========================= */
 
 function bindDashboard() {
+
+  document
+    .querySelector("#addProductBtn")
+    ?.addEventListener(
+      "click",
+      addProduct
+    );
 
   document
     .querySelector("#addArticleBtn")
@@ -763,6 +870,26 @@ function bindDashboard() {
       }
     );
 
+
+  document
+    .querySelectorAll(".deleteProduct")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const id =
+            Number(button.dataset.id);
+
+          deleteProduct(id);
+
+        }
+      );
+
+    });
+
+
   document
     .querySelectorAll(".deleteArticle")
     .forEach(button => {
@@ -780,6 +907,113 @@ function bindDashboard() {
       );
 
     });
+}
+
+/* =========================
+   ADD PRODUCT
+========================= */
+
+function addProduct() {
+
+  const title =
+    document
+      .querySelector("#productTitle")
+      ?.value
+      .trim();
+
+  const type =
+    document
+      .querySelector("#productType")
+      ?.value;
+
+  const description =
+    document
+      .querySelector("#productDescription")
+      ?.value
+      .trim();
+
+  const price =
+    Number(
+      document
+        .querySelector("#productPrice")
+        ?.value || 0
+    );
+
+  const oldPrice =
+    Number(
+      document
+        .querySelector("#productOldPrice")
+        ?.value || 0
+    );
+
+  const access =
+    document
+      .querySelector("#productAccess")
+      ?.value;
+
+  const status =
+    document
+      .querySelector("#productStatus")
+      ?.value;
+
+
+  if (!title) {
+    alert("اكتبي اسم المنتج أولًا.");
+    return;
+  }
+
+  if (!description) {
+    alert("اكتبي وصف المنتج أولًا.");
+    return;
+  }
+
+
+  const products = getProducts();
+
+  products.unshift({
+
+    id: Date.now(),
+
+    type,
+
+    title,
+
+    description,
+
+    price,
+
+    oldPrice,
+
+    access,
+
+    status
+
+  });
+
+
+  saveProducts(products);
+
+  dashboard();
+}
+
+/* =========================
+   DELETE PRODUCT
+========================= */
+
+function deleteProduct(id) {
+
+  const products =
+    getProducts();
+
+  const updated =
+    products.filter(
+      product =>
+        product.id !== id
+    );
+
+  saveProducts(updated);
+
+  dashboard();
 }
 
 /* =========================
@@ -813,6 +1047,7 @@ function addArticle() {
       .querySelector("#free")
       ?.checked;
 
+
   if (!title) {
     alert("اكتبي عنوان المقال أولًا.");
     return;
@@ -822,6 +1057,7 @@ function addArticle() {
     alert("اكتبي محتوى المقال أولًا.");
     return;
   }
+
 
   state.articles.unshift({
 
@@ -841,6 +1077,7 @@ function addArticle() {
     text
 
   });
+
 
   save(state);
 
@@ -863,6 +1100,7 @@ function addAffirm() {
   const value =
     input.value.trim();
 
+
   if (!value) {
 
     alert(
@@ -871,6 +1109,7 @@ function addAffirm() {
 
     return;
   }
+
 
   state.affirmations.unshift(
     value
