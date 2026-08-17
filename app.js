@@ -1,18 +1,13 @@
+```javascript
 /* =========================================================
    FÉMININE MIND — APP.JS
-   Unified Application Version
+   Version — Store + Services Connected
 ========================================================= */
 
-const $ = selector =>
-  document.querySelector(selector);
-
-const STATE_KEY = "fm_state";
-const PRODUCTS_KEY = "fm_products";
+const $ = (s) => document.querySelector(s);
 
 const state = {
-
-  route:
-    location.hash.slice(1) || "home",
+  route: location.hash.slice(1) || "home",
 
   articles: [
     {
@@ -21,8 +16,7 @@ const state = {
       cat: "الحدود النفسية",
       free: true,
       date: "هذا الأسبوع",
-      text:
-        "عندما نربط قبول الآخرين لنا بمدى موافقتنا عليهم، تصبح الحدود صعبة. تعلمي أن تحمي احتياجاتك دون شعور بالذنب."
+      text: "عندما نربط قبول الآخرين لنا بمدى موافقتنا عليهم، تصبح الحدود صعبة. تعلمي أن تحمي احتياجاتك دون شعور بالذنب."
     },
     {
       id: 2,
@@ -30,8 +24,7 @@ const state = {
       cat: "الوعي الذاتي",
       free: true,
       date: "هذا الأسبوع",
-      text:
-        "إرضاء الآخرين قد يمنح راحة قصيرة، لكنه قد يبعدك تدريجيًا عن احتياجاتك وقيمك وحدودك."
+      text: "إرضاء الآخرين قد يمنح راحة قصيرة، لكنه قد يبعدك تدريجيًا عن احتياجاتك وقيمك وحدودك."
     },
     {
       id: 3,
@@ -39,8 +32,7 @@ const state = {
       cat: "التعافي العاطفي",
       free: false,
       date: "Premium",
-      text:
-        "الاحتواء العاطفي يساعد على بناء علاقة أكثر أمانًا، ويمنح المشاعر مساحة للفهم والتعبير."
+      text: "الاحتواء العاطفي يساعد على بناء علاقة أكثر أمانًا، ويمنح المشاعر مساحة للفهم والتعبير."
     },
     {
       id: 4,
@@ -48,8 +40,7 @@ const state = {
       cat: "الحدود النفسية",
       free: true,
       date: "هذا الأسبوع",
-      text:
-        "من العلامات المهمة الشعور المستمر بالاستنزاف، والموافقة رغم عدم الرغبة، والخوف المبالغ فيه من رفض الآخرين."
+      text: "من العلامات المهمة الشعور المستمر بالاستنزاف، الموافقة رغم عدم الرغبة، والخوف المبالغ فيه من رفض الآخرين."
     },
     {
       id: 5,
@@ -57,8 +48,7 @@ const state = {
       cat: "العلاقات",
       free: false,
       date: "Premium",
-      text:
-        "الأمان العاطفي لا يعني غياب الخلاف، بل القدرة على التعبير عن الاحتياجات والمشاعر مع وجود الاحترام والاحتواء."
+      text: "الأمان العاطفي لا يعني غياب الخلاف، بل القدرة على التعبير عن الاحتياجات والمشاعر مع وجود الاحترام والاحتواء."
     }
   ],
 
@@ -76,38 +66,31 @@ const state = {
   exercises: [
     {
       title: "توقفي واسألي نفسك",
-      text:
-        "ماذا أشعر الآن؟ ماذا أحتاج؟ وما الشيء الصغير الذي يمكنني فعله لنفسي اليوم؟"
+      text: "ماذا أشعر الآن؟ ماذا أحتاج؟ وما الشيء الصغير الذي يمكنني فعله لنفسي اليوم؟"
     },
     {
       title: "حدودي اليوم",
-      text:
-        "اكتبي موقفًا وافقتِ فيه رغم أنكِ كنتِ تريدين الرفض، ثم اكتبي كيف كنتِ تتمنين التعبير عن حدك."
+      text: "اكتبي موقفًا وافقتِ فيه رغم أنكِ كنتِ تريدين الرفض، ثم اكتبي كيف كنتِ تتمنين التعبير عن حدك."
     },
     {
       title: "رسالة إلى الذات",
-      text:
-        "اكتبي لنفسك رسالة قصيرة كما لو كنتِ تتحدثين إلى امرأة تحبينها وتريدين دعمها."
+      text: "اكتبي لنفسك رسالة قصيرة كما لو كنتِ تتحدثين إلى امرأة تحبينها وتريدين دعمها."
     },
     {
       title: "ما الذي أحتاجه؟",
-      text:
-        "اختاري شعورًا حاضرًا الآن واكتبي تحته: ماذا يحاول هذا الشعور أن يخبرني؟ وما الاحتياج الموجود خلفه؟"
+      text: "اختاري شعورًا حاضرًا الآن واكتبي تحته: ماذا يحاول هذا الشعور أن يخبرني؟ وما الاحتياج الموجود خلفه؟"
     },
     {
       title: "مساحتي الخاصة",
-      text:
-        "حددي شيئًا واحدًا يستنزف طاقتك، ثم اكتبي حدًا صغيرًا يمكنك وضعه هذا الأسبوع."
+      text: "حددي شيئًا واحدًا يستنزف طاقتك، ثم اكتبي حدًا صغيرًا يمكنك وضعه هذا الأسبوع."
     },
     {
       title: "التوقف عن إرضاء الآخرين",
-      text:
-        "اكتبي موقفًا فعلتِ فيه شيئًا فقط خوفًا من إزعاج شخص آخر. ماذا كنتِ تريدين فعلًا؟"
+      text: "اكتبي موقفًا فعلتِ فيه شيئًا فقط خوفًا من إزعاج شخص آخر. ماذا كنتِ تريدين فعلًا؟"
     },
     {
       title: "حديث لطيف مع الذات",
-      text:
-        "اكتبي ثلاث جمل لطيفة تحتاجين إلى سماعها اليوم، ثم اقرئيها ببطء."
+      text: "اكتبي ثلاث جمل لطيفة تحتاجين إلى سماعها اليوم، ثم اقرئيها ببطء."
     }
   ],
 
@@ -167,13 +150,14 @@ const state = {
   ]
 };
 
+
 /* =========================================================
-   STORAGE
+   LOCAL STORAGE
 ========================================================= */
 
-function saveState() {
+function save() {
   localStorage.setItem(
-    STATE_KEY,
+    "fm_state",
     JSON.stringify({
       articles: state.articles,
       affirmations: state.affirmations
@@ -181,55 +165,84 @@ function saveState() {
   );
 }
 
-function loadState() {
+function load() {
   try {
-    const saved =
-      JSON.parse(
-        localStorage.getItem(STATE_KEY) || "null"
-      );
-
-    if (!saved) return;
-
-    if (Array.isArray(saved.articles)) {
-      state.articles = saved.articles;
-    }
-
-    if (Array.isArray(saved.affirmations)) {
-      state.affirmations =
-        saved.affirmations;
-    }
-
-  } catch (error) {
-    console.log(
-      "FM state load skipped"
+    const saved = JSON.parse(
+      localStorage.getItem("fm_state") || "null"
     );
+
+    if (saved) {
+      if (Array.isArray(saved.articles) && saved.articles.length) {
+        state.articles = saved.articles;
+      }
+
+      if (
+        Array.isArray(saved.affirmations) &&
+        saved.affirmations.length
+      ) {
+        state.affirmations = saved.affirmations;
+      }
+    }
+  } catch (e) {
+    console.log("FM state load skipped");
   }
 }
 
+
+/* =========================================================
+   PRODUCTS + SERVICES
+   يتم قراءتها مباشرة من لوحة الإدارة
+========================================================= */
+
 function getProducts() {
   try {
-    const products =
-      JSON.parse(
-        localStorage.getItem(
-          PRODUCTS_KEY
-        ) || "[]"
-      );
+    const products = JSON.parse(
+      localStorage.getItem("fm_products") || "[]"
+    );
 
     return Array.isArray(products)
       ? products
       : [];
-
-  } catch {
+  } catch (error) {
+    console.log("FM products load skipped");
     return [];
   }
 }
+
+function getServices() {
+  try {
+    const services = JSON.parse(
+      localStorage.getItem("fm_services") || "[]"
+    );
+
+    return Array.isArray(services)
+      ? services
+      : [];
+  } catch (error) {
+    console.log("FM services load skipped");
+    return [];
+  }
+}
+
+function getVisibleProducts() {
+  return getProducts().filter(
+    (product) =>
+      product.visible !== false &&
+      product.status === "published"
+  );
+}
+
+function getVisibleServices() {
+  return getServices();
+}
+
 
 /* =========================================================
    HELPERS
 ========================================================= */
 
-function escapeHTML(value) {
-  return String(value ?? "")
+function escapeHTML(text) {
+  return String(text || "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -237,25 +250,35 @@ function escapeHTML(value) {
     .replace(/'/g, "&#039;");
 }
 
+function money(value) {
+  const number = Number(value || 0);
+
+  return number.toLocaleString("fr-FR");
+}
+
+function accessLabel(access) {
+  const labels = {
+    paid: "💰 مدفوع",
+    free: "🆓 مجاني",
+    premium: "💎 Premium"
+  };
+
+  return labels[access] || access || "منتج";
+}
+
 function toast(message) {
-  const element = $("#toast");
+  const el = $("#toast");
 
-  if (!element) {
-    alert(message);
-    return;
-  }
+  if (!el) return;
 
-  element.textContent = message;
-  element.classList.add("show");
+  el.textContent = message;
+  el.classList.add("show");
 
-  clearTimeout(
-    window.fmToastTimer
-  );
+  clearTimeout(window.fmToastTimer);
 
-  window.fmToastTimer =
-    setTimeout(() => {
-      element.classList.remove("show");
-    }, 2200);
+  window.fmToastTimer = setTimeout(() => {
+    el.classList.remove("show");
+  }, 2200);
 }
 
 function go(route) {
@@ -278,78 +301,74 @@ function layout(html) {
   app.innerHTML = html;
 
   nav();
+
+  document
+    .querySelectorAll(".bottom-nav button")
+    .forEach((btn) => {
+      btn.classList.toggle(
+        "active",
+        btn.dataset.route === state.route
+      );
+    });
 }
 
 function nav() {
   document
-    .querySelectorAll(
-      ".bottom-nav button"
-    )
-    .forEach(button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.route ===
-          state.route
-      );
-
-      button.onclick = () =>
-        go(button.dataset.route);
+    .querySelectorAll(".bottom-nav button")
+    .forEach((btn) => {
+      btn.onclick = () => {
+        go(btn.dataset.route);
+      };
     });
 }
+
 
 /* =========================================================
    DAILY CONTENT
 ========================================================= */
 
-function getDayOfYear() {
-  const now = new Date();
-
-  const start =
-    new Date(
-      now.getFullYear(),
-      0,
-      1
-    );
-
-  return Math.floor(
-    (now - start) /
-      86400000
-  );
-}
-
 function getDailyIndex(length) {
   if (!length) return 0;
 
-  return getDayOfYear() % length;
+  const start = new Date(
+    new Date().getFullYear(),
+    0,
+    0
+  );
+
+  const today = new Date();
+
+  const diff = today - start;
+
+  const day =
+    Math.floor(diff / 86400000);
+
+  return day % length;
 }
 
 function getDailyAffirmation() {
   return state.affirmations[
-    getDailyIndex(
-      state.affirmations.length
-    )
+    getDailyIndex(state.affirmations.length)
   ];
 }
 
 function getDailyExercise() {
   return state.exercises[
-    getDailyIndex(
-      state.exercises.length
-    )
+    getDailyIndex(state.exercises.length)
   ];
 }
+
 
 /* =========================================================
    HOME
 ========================================================= */
 
 function home() {
-  const affirmation =
-    getDailyAffirmation();
+  const affirmation = getDailyAffirmation();
+  const exercise = getDailyExercise();
 
-  const exercise =
-    getDailyExercise();
+  const products = getVisibleProducts();
+  const services = getVisibleServices();
 
   layout(`
     <section class="hero">
@@ -363,16 +382,18 @@ function home() {
       </h1>
 
       <p>
-        محتوى نفسي مبسط، وعي ذاتي،
-        علاقات صحية وتمارين عملية.
+        محتوى نفسي مبسط، وعي ذاتي، علاقات صحية،
+        وتمارين عملية تساعدك على فهم نفسك
+        والتعامل مع مشاعرك بوعي.
       </p>
 
     </section>
 
+
     <section class="daily card">
 
       <span class="pill">
-        توكيد اليوم 🌷
+        توكيد الصباح
       </span>
 
       <p class="quote">
@@ -380,10 +401,11 @@ function home() {
       </p>
 
       <div class="banner">
-        يتغير التوكيد تلقائيًا كل يوم.
+        🌷 توكيد اليوم يتغير تلقائيًا كل يوم.
       </div>
 
     </section>
+
 
     <section class="daily card">
 
@@ -408,9 +430,139 @@ function home() {
 
     </section>
 
+
+    <!-- STORE -->
+
+    ${
+      products.length
+        ? `
+          <section class="section-title">
+            <h2>
+              🛍️ منتجات Féminine Mind
+            </h2>
+
+            <p class="micro">
+              اكتشفي الدورات والكتب والـ Workbooks
+              والمحتوى المتقدم.
+            </p>
+          </section>
+
+          <div class="grid">
+
+            ${products.map(
+              (product) => `
+                <article class="card">
+
+                  <span class="pill">
+                    ${escapeHTML(product.type)}
+                  </span>
+
+                  <h3>
+                    ${escapeHTML(product.name)}
+                  </h3>
+
+                  <p>
+                    ${escapeHTML(product.description)}
+                  </p>
+
+                  <p>
+                    <strong>
+                      ${money(product.price)}
+                    </strong>
+                  </p>
+
+                  ${
+                    Number(product.oldPrice) > 0
+                      ? `
+                        <p class="micro">
+                          السعر السابق:
+                          ${money(product.oldPrice)}
+                        </p>
+                      `
+                      : ""
+                  }
+
+                  <p>
+                    ${escapeHTML(
+                      accessLabel(product.access)
+                    )}
+                  </p>
+
+                  <button
+                    class="btn full openProduct"
+                    data-id="${escapeHTML(product.id)}"
+                  >
+                    اكتشفي المنتج
+                  </button>
+
+                </article>
+              `
+            ).join("")}
+
+          </div>
+        `
+        : ""
+    }
+
+
+    <!-- SERVICES -->
+
+    ${
+      services.length
+        ? `
+          <section class="section-title">
+            <h2>
+              💗 خدمات Féminine Mind
+            </h2>
+
+            <p class="micro">
+              جلسات وبرامج وورش لمرافقتك في رحلتك.
+            </p>
+          </section>
+
+          <div class="grid">
+
+            ${services.map(
+              (service) => `
+                <article class="card">
+
+                  <span class="pill">
+                    💗 خدمة
+                  </span>
+
+                  <h3>
+                    ${escapeHTML(service.name)}
+                  </h3>
+
+                  <p>
+                    ${escapeHTML(service.description)}
+                  </p>
+
+                  <span class="pill">
+                    ${escapeHTML(service.status)}
+                  </span>
+
+                  <button
+                    class="btn full openService"
+                    data-id="${escapeHTML(service.id)}"
+                  >
+                    اكتشفي الخدمة
+                  </button>
+
+                </article>
+              `
+            ).join("")}
+
+          </div>
+        `
+        : ""
+    }
+
+
     <section class="banner">
       مساحة آمنة لفهم ذاتك وبناء علاقة أكثر لطفًا مع نفسك.
     </section>
+
 
     <div class="section-title">
       <h2>
@@ -418,66 +570,520 @@ function home() {
       </h2>
     </div>
 
+
     <div class="grid">
 
       <button
         class="card action-card"
         data-go="chat"
       >
-        💗
+        <span>💗</span>
         <strong>المحادثة</strong>
-        <small>تحدثي مع Feminine Mind AI</small>
+        <small>
+          تحدثي مع Feminine Mind AI
+        </small>
       </button>
 
       <button
         class="card action-card"
         data-go="library"
       >
-        📚
+        <span>📚</span>
         <strong>المحتوى</strong>
-        <small>مقالات وتمارين وتوكيدات</small>
+        <small>
+          مقالات وتمارين وتوكيدات
+        </small>
       </button>
 
       <button
         class="card action-card"
         data-go="tests"
       >
-        📝
+        <span>📝</span>
         <strong>الاختبارات</strong>
-        <small>اكتشفي نفسك بوعي</small>
+        <small>
+          اكتشفي نفسك بوعي
+        </small>
+      </button>
+
+      <button
+        class="card action-card"
+        data-go="store"
+      >
+        <span>🛍️</span>
+        <strong>المتجر</strong>
+        <small>
+          المنتجات الرقمية
+        </small>
+      </button>
+
+      <button
+        class="card action-card"
+        data-go="services"
+      >
+        <span>💗</span>
+        <strong>الخدمات</strong>
+        <small>
+          الجلسات والبرامج
+        </small>
       </button>
 
       <button
         class="card action-card"
         data-go="profile"
       >
-        👤
+        <span>👤</span>
         <strong>حسابي</strong>
-        <small>مساحتك الشخصية</small>
+        <small>
+          مساحتك الشخصية
+        </small>
       </button>
 
     </div>
   `);
 
+
   document
     .querySelectorAll("[data-go]")
-    .forEach(button => {
-
-      button.onclick = () =>
-        go(button.dataset.go);
+    .forEach((btn) => {
+      btn.onclick = () => {
+        go(btn.dataset.go);
+      };
     });
+
 
   $("#dailyExerciseBtn")?.addEventListener(
     "click",
-    exercisePage
+    () => {
+      exercisePage();
+    }
   );
+
+
+  document
+    .querySelectorAll(".openProduct")
+    .forEach((btn) => {
+      btn.onclick = () => {
+        productPage(btn.dataset.id);
+      };
+    });
+
+
+  document
+    .querySelectorAll(".openService")
+    .forEach((btn) => {
+      btn.onclick = () => {
+        servicePage(btn.dataset.id);
+      };
+    });
 }
 
+
 /* =========================================================
-   EXERCISE
+   STORE
+========================================================= */
+
+function store() {
+
+  const products =
+    getVisibleProducts();
+
+  layout(`
+    <button
+      class="btn secondary"
+      id="backHomeStore"
+    >
+      ← العودة إلى الرئيسية
+    </button>
+
+    <div class="section-title">
+      <h2>
+        🛍️ متجر Féminine Mind
+      </h2>
+
+      <p class="micro">
+        منتجات رقمية صممت لمرافقتك في رحلة الوعي والنمو.
+      </p>
+    </div>
+
+    ${
+      products.length
+        ? `
+          <div class="grid">
+
+            ${products.map(
+              (product) => `
+                <article class="card">
+
+                  <span class="pill">
+                    ${escapeHTML(product.type)}
+                  </span>
+
+                  <h2>
+                    ${escapeHTML(product.name)}
+                  </h2>
+
+                  <p>
+                    ${escapeHTML(product.description)}
+                  </p>
+
+                  <h3>
+                    ${money(product.price)}
+                  </h3>
+
+                  ${
+                    Number(product.oldPrice) > 0
+                      ? `
+                        <p class="micro">
+                          السعر قبل الخصم:
+                          ${money(product.oldPrice)}
+                        </p>
+                      `
+                      : ""
+                  }
+
+                  <p>
+                    ${escapeHTML(
+                      accessLabel(product.access)
+                    )}
+                  </p>
+
+                  <button
+                    class="btn full openProduct"
+                    data-id="${escapeHTML(product.id)}"
+                  >
+                    عرض المنتج
+                  </button>
+
+                </article>
+              `
+            ).join("")}
+
+          </div>
+        `
+        : `
+          <div class="card">
+            <h3>
+              المتجر قيد التجهيز 🌷
+            </h3>
+
+            <p>
+              ستظهر المنتجات هنا تلقائيًا
+              عندما يتم نشرها من لوحة الإدارة.
+            </p>
+          </div>
+        `
+    }
+  `);
+
+
+  $("#backHomeStore").onclick =
+    () => go("home");
+
+
+  document
+    .querySelectorAll(".openProduct")
+    .forEach((btn) => {
+      btn.onclick = () => {
+        productPage(btn.dataset.id);
+      };
+    });
+}
+
+
+/* =========================================================
+   PRODUCT PAGE
+========================================================= */
+
+function productPage(id) {
+
+  const product =
+    getProducts().find(
+      (item) =>
+        String(item.id) === String(id)
+    );
+
+  if (
+    !product ||
+    product.visible === false ||
+    product.status !== "published"
+  ) {
+    toast(
+      "هذا المنتج غير متاح حاليًا."
+    );
+    return;
+  }
+
+
+  layout(`
+    <button
+      class="btn secondary"
+      id="backStore"
+    >
+      ← العودة إلى المتجر
+    </button>
+
+    <article
+      class="card"
+      style="margin-top:15px"
+    >
+
+      <span class="pill">
+        ${escapeHTML(product.type)}
+      </span>
+
+      <h1>
+        ${escapeHTML(product.name)}
+      </h1>
+
+      <p>
+        ${escapeHTML(product.description)}
+      </p>
+
+      <div class="banner">
+
+        <strong>
+          السعر:
+        </strong>
+
+        ${money(product.price)}
+
+      </div>
+
+      ${
+        Number(product.oldPrice) > 0
+          ? `
+            <p class="micro">
+              السعر قبل الخصم:
+              ${money(product.oldPrice)}
+            </p>
+          `
+          : ""
+      }
+
+      <p>
+        ${escapeHTML(
+          accessLabel(product.access)
+        )}
+      </p>
+
+      <button
+        class="btn full"
+        id="productAction"
+      >
+        ${
+          product.access === "free"
+            ? "فتح المنتج"
+            : "طلب المنتج"
+        }
+      </button>
+
+    </article>
+  `);
+
+
+  $("#backStore").onclick =
+    () => go("store");
+
+
+  $("#productAction").onclick =
+    () => {
+
+      toast(
+        product.access === "free"
+          ? "سيتم فتح المحتوى المجاني 🌷"
+          : "تم تسجيل رغبتك في هذا المنتج 🌷"
+      );
+
+      localStorage.setItem(
+        "fm_product_request",
+        JSON.stringify({
+          id: product.id,
+          name: product.name,
+          date: new Date().toISOString()
+        })
+      );
+    };
+}
+
+
+/* =========================================================
+   SERVICES
+========================================================= */
+
+function services() {
+
+  const items =
+    getVisibleServices();
+
+  layout(`
+    <button
+      class="btn secondary"
+      id="backHomeServices"
+    >
+      ← العودة إلى الرئيسية
+    </button>
+
+    <div class="section-title">
+      <h2>
+        💗 خدمات Féminine Mind
+      </h2>
+
+      <p class="micro">
+        خدمات مخصصة لدعم رحلتك مع ذاتك وعلاقاتك.
+      </p>
+    </div>
+
+    <div class="grid">
+
+      ${
+        items.length
+          ? items.map(
+              (service) => `
+                <article class="card">
+
+                  <span class="pill">
+                    💗 خدمة
+                  </span>
+
+                  <h2>
+                    ${escapeHTML(service.name)}
+                  </h2>
+
+                  <p>
+                    ${escapeHTML(service.description)}
+                  </p>
+
+                  <span class="pill">
+                    ${escapeHTML(service.status)}
+                  </span>
+
+                  <button
+                    class="btn full openService"
+                    data-id="${escapeHTML(service.id)}"
+                  >
+                    عرض الخدمة
+                  </button>
+
+                </article>
+              `
+            ).join("")
+          : `
+              <div class="card">
+                <p>
+                  الخدمات قيد التجهيز 🌷
+                </p>
+              </div>
+            `
+      }
+
+    </div>
+  `);
+
+
+  $("#backHomeServices").onclick =
+    () => go("home");
+
+
+  document
+    .querySelectorAll(".openService")
+    .forEach((btn) => {
+      btn.onclick = () => {
+        servicePage(btn.dataset.id);
+      };
+    });
+}
+
+
+/* =========================================================
+   SERVICE PAGE
+========================================================= */
+
+function servicePage(id) {
+
+  const service =
+    getServices().find(
+      (item) =>
+        String(item.id) === String(id)
+    );
+
+  if (!service) {
+    toast(
+      "لم يتم العثور على الخدمة."
+    );
+    return;
+  }
+
+
+  layout(`
+    <button
+      class="btn secondary"
+      id="backServices"
+    >
+      ← العودة إلى الخدمات
+    </button>
+
+    <article
+      class="card"
+      style="margin-top:15px"
+    >
+
+      <span class="pill">
+        💗 خدمة
+      </span>
+
+      <h1>
+        ${escapeHTML(service.name)}
+      </h1>
+
+      <p>
+        ${escapeHTML(service.description)}
+      </p>
+
+      <div class="banner">
+        ${escapeHTML(service.status)}
+      </div>
+
+      <button
+        class="btn full"
+        id="serviceBooking"
+      >
+        طلب هذه الخدمة
+      </button>
+
+    </article>
+  `);
+
+
+  $("#backServices").onclick =
+    () => go("services");
+
+
+  $("#serviceBooking").onclick =
+    () => {
+
+      localStorage.setItem(
+        "fm_booking_request",
+        JSON.stringify({
+          serviceId: service.id,
+          serviceName: service.name,
+          date: new Date().toISOString()
+        })
+      );
+
+      toast(
+        "تم تسجيل رغبتك في الخدمة 🌷"
+      );
+    };
+}
+
+
+/* =========================================================
+   DAILY EXERCISE
 ========================================================= */
 
 function exercisePage() {
+
   const exercise =
     getDailyExercise();
 
@@ -490,7 +1096,9 @@ function exercisePage() {
     </button>
 
     <div class="section-title">
-      <h2>تمرين اليوم 🌷</h2>
+      <h2>
+        تمرين اليوم 🌷
+      </h2>
     </div>
 
     <article class="card">
@@ -509,6 +1117,8 @@ function exercisePage() {
 
       <div class="banner">
         خذي من 5 إلى 10 دقائق لنفسك.
+        لا تبحثي عن الإجابة المثالية،
+        فقط كوني صادقة مع نفسك.
       </div>
 
       <textarea
@@ -535,8 +1145,7 @@ function exercisePage() {
     () => {
 
       const value =
-        $("#exerciseJournal")
-          ?.value.trim();
+        $("#exerciseJournal")?.value.trim();
 
       if (!value) {
         toast(
@@ -545,13 +1154,9 @@ function exercisePage() {
         return;
       }
 
-      const today =
-        new Date()
-          .toISOString()
-          .slice(0, 10);
-
       localStorage.setItem(
-        "fm_daily_exercise_" + today,
+        "fm_daily_exercise_" +
+          new Date().toISOString().slice(0, 10),
         value
       );
 
@@ -561,11 +1166,13 @@ function exercisePage() {
     };
 }
 
+
 /* =========================================================
    CHAT
 ========================================================= */
 
 function chat() {
+
   layout(`
     <section class="section-title">
 
@@ -585,19 +1192,22 @@ function chat() {
         id="messages"
         class="messages"
       >
+
         <div class="msg ai">
           مرحبًا بكِ في Féminine Mind 🌷
           <br>
-          أنا هنا للاستماع إليكِ.
+          أنا هنا للاستماع إليكِ ومساعدتكِ
+          على فهم مشاعركِ وأفكاركِ بطريقة آمنة وهادئة.
         </div>
+
       </div>
 
       <div class="composer">
 
         <textarea
           id="chatInput"
-          rows="3"
           placeholder="اكتبي ما يشغل بالك..."
+          rows="3"
         ></textarea>
 
         <button
@@ -619,41 +1229,45 @@ function chat() {
 
   $("#chatInput")?.addEventListener(
     "keydown",
-    event => {
+    (e) => {
 
       if (
-        event.key === "Enter" &&
-        !event.shiftKey
+        e.key === "Enter" &&
+        !e.shiftKey
       ) {
-        event.preventDefault();
+        e.preventDefault();
         sendChat();
       }
+
     }
   );
 }
 
 function addMessage(text, type) {
-  const box = $("#messages");
+
+  const box =
+    $("#messages");
 
   if (!box) return;
 
-  const message =
+  const div =
     document.createElement("div");
 
-  message.className =
+  div.className =
     `msg ${type}`;
 
-  message.innerHTML =
+  div.innerHTML =
     escapeHTML(text)
       .replace(/\n/g, "<br>");
 
-  box.appendChild(message);
+  box.appendChild(div);
 
   box.scrollTop =
     box.scrollHeight;
 }
 
 async function sendChat() {
+
   const input =
     $("#chatInput");
 
@@ -714,7 +1328,7 @@ async function sendChat() {
     if (!response.ok) {
       throw new Error(
         data.error ||
-        "حدث خطأ في الاتصال."
+        "حدث خطأ في الاتصال بالمساعد."
       );
     }
 
@@ -722,15 +1336,17 @@ async function sendChat() {
       data.reply ||
       data.message ||
       data.text ||
-      "لم تصلني استجابة واضحة.";
+      "لم تصلني استجابة واضحة. حاولي مرة أخرى.";
 
     if (lastAI) {
+
       lastAI.innerHTML =
         escapeHTML(reply)
           .replace(
             /\n/g,
             "<br>"
           );
+
     }
 
     history.push(
@@ -756,11 +1372,15 @@ async function sendChat() {
     console.error(error);
 
     if (lastAI) {
+
       lastAI.textContent =
-        "تعذر الاتصال بالمساعد الآن. حاولي مرة أخرى.";
+        "تعذر الاتصال بالمساعد الآن. تأكدي من اتصال الإنترنت ثم حاولي مرة أخرى.";
+
     }
+
   }
 }
+
 
 /* =========================================================
    LIBRARY
@@ -787,13 +1407,7 @@ function library() {
       <button
         data-tab="exercises"
       >
-        التمارين
-      </button>
-
-      <button
-        data-tab="products"
-      >
-        المتجر
+        تمارين
       </button>
 
     </div>
@@ -803,164 +1417,81 @@ function library() {
 
   document
     .querySelectorAll("[data-tab]")
-    .forEach(button => {
+    .forEach((btn) => {
 
-      button.onclick = () => {
+      btn.onclick = () => {
 
         document
           .querySelectorAll("[data-tab]")
-          .forEach(item =>
-            item.classList.remove(
-              "active"
-            )
+          .forEach((x) =>
+            x.classList.remove("active")
           );
 
-        button.classList.add("active");
+        btn.classList.add("active");
 
         renderLibraryTab(
-          button.dataset.tab
+          btn.dataset.tab
         );
+
       };
+
     });
 
   renderLibraryTab("articles");
 }
 
 function renderLibraryTab(tab) {
+
   const box =
     $("#libraryContent");
 
   if (!box) return;
 
-  /* ARTICLES */
-
-  if (tab === "articles") {
-
-    box.innerHTML = `
-      <div class="section-title">
-        <h2>محتوى Féminine Mind</h2>
-      </div>
-
-      ${
-        state.articles.length
-          ? state.articles.map(article => `
-            <article class="card">
-
-              <span class="pill">
-                ${escapeHTML(article.cat)}
-              </span>
-
-              <h3>
-                ${escapeHTML(article.title)}
-              </h3>
-
-              <small>
-                ${escapeHTML(article.date)}
-              </small>
-
-              <p>
-                ${escapeHTML(article.text)}
-              </p>
-
-              <button
-                class="btn full ${
-                  article.free
-                    ? "readArticle"
-                    : "premiumArticle"
-                }"
-                data-id="${article.id}"
-              >
-                ${
-                  article.free
-                    ? "قراءة المقال"
-                    : "فتح المحتوى Premium 🔓"
-                }
-              </button>
-
-            </article>
-          `).join("")
-          : `
-            <div class="card">
-              لا توجد مقالات حاليًا.
-            </div>
-          `
-      }
-    `;
-
-    document
-      .querySelectorAll(
-        ".readArticle"
-      )
-      .forEach(button => {
-
-        button.onclick = () =>
-          openArticle(
-            button.dataset.id
-          );
-      });
-
-    document
-      .querySelectorAll(
-        ".premiumArticle"
-      )
-      .forEach(button => {
-
-        button.onclick = () =>
-          openArticle(
-            button.dataset.id,
-            true
-          );
-      });
-
-    return;
-  }
-
-  /* AFFIRMATIONS */
 
   if (tab === "affirmations") {
 
     box.innerHTML = `
       <div class="section-title">
-        <h2>توكيداتك اليومية 🌷</h2>
+        <h2>
+          توكيداتك اليومية
+        </h2>
       </div>
 
-      ${
-        state.affirmations.map(
-          (affirmation, index) => `
-            <div class="card">
+      ${state.affirmations
+        .map(
+          (a, i) => `
+          <div class="card">
 
-              <span class="pill">
-                توكيد ${index + 1}
-              </span>
+            <span class="pill">
+              توكيد ${i + 1}
+            </span>
 
-              <p class="quote">
-                ${escapeHTML(affirmation)}
-              </p>
+            <p class="quote">
+              ${escapeHTML(a)}
+            </p>
 
-              <button
-                class="btn secondary copyAff"
-                data-index="${index}"
-              >
-                نسخ التوكيد
-              </button>
+            <button
+              class="btn secondary copyAff"
+              data-index="${i}"
+            >
+              نسخ التوكيد
+            </button>
 
-            </div>
-          `
-        ).join("")
-      }
+          </div>
+        `
+        )
+        .join("")}
     `;
 
     document
       .querySelectorAll(".copyAff")
-      .forEach(button => {
+      .forEach((btn) => {
 
-        button.onclick = async () => {
+        btn.onclick = async () => {
 
           const text =
             state.affirmations[
-              Number(
-                button.dataset.index
-              )
+              Number(btn.dataset.index)
             ];
 
           try {
@@ -976,16 +1507,18 @@ function renderLibraryTab(tab) {
           } catch {
 
             toast(
-              "يمكنك نسخه يدويًا."
+              "يمكنك تحديد التوكيد ونسخه يدويًا."
             );
+
           }
+
         };
+
       });
 
     return;
   }
 
-  /* EXERCISES */
 
   if (tab === "exercises") {
 
@@ -996,14 +1529,19 @@ function renderLibraryTab(tab) {
           تمارين العودة إلى الذات
         </h2>
 
+        <p class="micro">
+          اختاري تمرينًا يناسب احتياجك اليوم.
+        </p>
+
       </div>
 
-      ${state.exercises.map(
-        (exercise, index) => `
+      ${state.exercises
+        .map(
+          (exercise, i) => `
           <div class="card">
 
             <span class="pill">
-              تمرين ${index + 1}
+              تمرين ${String(i + 1).padStart(2, "0")}
             </span>
 
             <h3>
@@ -1020,156 +1558,145 @@ function renderLibraryTab(tab) {
 
             <button
               class="btn full openExercise"
-              data-index="${index}"
+              data-index="${i}"
             >
               ابدئي التمرين
             </button>
 
           </div>
         `
-      ).join("")}
+        )
+        .join("")}
     `;
 
     document
-      .querySelectorAll(
-        ".openExercise"
-      )
-      .forEach(button => {
+      .querySelectorAll(".openExercise")
+      .forEach((btn) => {
 
-        button.onclick = () =>
+        btn.onclick = () => {
+
           exerciseDetails(
             Number(
-              button.dataset.index
+              btn.dataset.index
             )
           );
-      });
 
-    return;
-  }
-
-  /* PRODUCTS */
-
-  if (tab === "products") {
-
-    const products =
-      getProducts().filter(
-        product =>
-          product.visible !== false &&
-          product.status !== "archived"
-      );
-
-    box.innerHTML = `
-      <div class="section-title">
-
-        <h2>
-          متجر Féminine Mind 🛍️
-        </h2>
-
-        <p class="micro">
-          المنتجات المتاحة في المنصة.
-        </p>
-
-      </div>
-
-      ${
-        products.length
-          ? products.map(product => `
-            <div class="card">
-
-              <span class="pill">
-                ${escapeHTML(product.type)}
-              </span>
-
-              <h3>
-                ${escapeHTML(product.name)}
-              </h3>
-
-              <p>
-                ${escapeHTML(product.description)}
-              </p>
-
-              ${
-                Number(product.oldPrice) > 0
-                  ? `
-                    <p>
-                      <s>
-                        ${Number(
-                          product.oldPrice
-                        ).toLocaleString("fr-FR")}
-                      </s>
-                    </p>
-                  `
-                  : ""
-              }
-
-              <h3>
-                ${Number(
-                  product.price || 0
-                ).toLocaleString("fr-FR")}
-              </h3>
-
-              <button
-                class="btn full productOpen"
-                data-slug="${escapeHTML(
-                  product.slug || ""
-                )}"
-              >
-                فتح المنتج
-              </button>
-
-            </div>
-          `).join("")
-          : `
-            <div class="card">
-              لا توجد منتجات منشورة حاليًا.
-            </div>
-          `
-      }
-    `;
-
-    document
-      .querySelectorAll(
-        ".productOpen"
-      )
-      .forEach(button => {
-
-        button.onclick = () => {
-
-          const product =
-            products.find(
-              item =>
-                String(item.slug) ===
-                String(
-                  button.dataset.slug
-                )
-            );
-
-          if (!product) return;
-
-          toast(
-            "صفحة المنتج قيد التطوير 🌷"
-          );
         };
+
       });
 
     return;
   }
+
+
+  box.innerHTML = `
+    <div class="section-title">
+
+      <h2>
+        محتوى Féminine Mind
+      </h2>
+
+    </div>
+
+    ${state.articles
+      .map(
+        (article) => `
+        <article class="card">
+
+          <span class="pill">
+            ${escapeHTML(
+              article.cat
+            )}
+          </span>
+
+          <h3>
+            ${escapeHTML(
+              article.title
+            )}
+          </h3>
+
+          <small>
+            ${escapeHTML(
+              article.date
+            )}
+          </small>
+
+          <p>
+            ${escapeHTML(
+              article.text
+            )}
+          </p>
+
+          ${
+            article.free
+              ? `
+                <button
+                  class="btn full readArticle"
+                  data-id="${article.id}"
+                >
+                  قراءة المقال
+                </button>
+              `
+              : `
+                <button
+                  class="btn full premiumArticle"
+                  data-id="${article.id}"
+                >
+                  فتح المحتوى Premium 🔓
+                </button>
+              `
+          }
+
+        </article>
+      `
+      )
+      .join("")}
+  `;
+
+
+  document
+    .querySelectorAll(".readArticle")
+    .forEach((btn) => {
+
+      btn.onclick = () => {
+
+        openArticle(
+          Number(
+            btn.dataset.id
+          )
+        );
+
+      };
+
+    });
+
+
+  document
+    .querySelectorAll(".premiumArticle")
+    .forEach((btn) => {
+
+      btn.onclick = () => {
+
+        openArticle(
+          Number(
+            btn.dataset.id
+          ),
+          true
+        );
+
+      };
+
+    });
 }
 
-/* =========================================================
-   ARTICLE
-========================================================= */
 
-function openArticle(
-  id,
-  premium = false
-) {
+function openArticle(id, premium = false) {
 
   const article =
     state.articles.find(
-      item =>
-        String(item.id) ===
-        String(id)
+      (x) =>
+        Number(x.id) ===
+        Number(id)
     );
 
   if (!article) {
@@ -1193,19 +1720,27 @@ function openArticle(
     >
 
       <span class="pill">
-        ${escapeHTML(article.cat)}
+        ${escapeHTML(
+          article.cat
+        )}
       </span>
 
       <h1>
-        ${escapeHTML(article.title)}
+        ${escapeHTML(
+          article.title
+        )}
       </h1>
 
       <small>
-        ${escapeHTML(article.date)}
+        ${escapeHTML(
+          article.date
+        )}
       </small>
 
       <p style="margin-top:20px">
-        ${escapeHTML(article.text)}
+        ${escapeHTML(
+          article.text
+        )}
       </p>
 
       ${
@@ -1213,6 +1748,8 @@ function openArticle(
           ? `
             <div class="banner">
               ✨ هذا محتوى Premium.
+              تم فتحه الآن في النسخة الحالية
+              لمتابعة اختبار وظائف المنصة.
             </div>
 
             <p>
@@ -1220,18 +1757,11 @@ function openArticle(
               قادرة على الظهور داخل العلاقة دون خوف
               مستمر من الرفض أو السخرية أو التجاهل.
             </p>
-
-            <p>
-              اسألي نفسك:
-              هل أشعر أنني أستطيع أن أكون نفسي
-              داخل علاقاتي؟
-            </p>
           `
           : `
             <p>
-              خذي وقتكِ في قراءة الفكرة،
-              ثم اسألي نفسك:
-              كيف تظهر هذه الفكرة في حياتي؟
+              خذي وقتكِ في قراءة الفكرة، ثم اسألي نفسك:
+              كيف تظهر هذه الفكرة في حياتي وعلاقاتي؟
             </p>
           `
       }
@@ -1243,9 +1773,6 @@ function openArticle(
     () => library();
 }
 
-/* =========================================================
-   EXERCISE DETAILS
-========================================================= */
 
 function exerciseDetails(index) {
 
@@ -1308,7 +1835,8 @@ function exerciseDetails(index) {
 
       const value =
         $("#exerciseNote")
-          ?.value.trim();
+          ?.value
+          .trim();
 
       if (!value) {
         toast(
@@ -1318,7 +1846,8 @@ function exerciseDetails(index) {
       }
 
       localStorage.setItem(
-        "fm_exercise_note_" + index,
+        "fm_exercise_note_" +
+          index,
         value
       );
 
@@ -1327,6 +1856,7 @@ function exerciseDetails(index) {
       );
     };
 }
+
 
 /* =========================================================
    TESTS
@@ -1346,29 +1876,36 @@ function tests() {
       </h2>
 
       <p class="micro">
-        للتأمل وفهم الذات وليست تشخيصًا طبيًا.
+        اختبارات للتأمل وفهم الذات، وليست تشخيصًا طبيًا.
       </p>
 
     </div>
 
     <div class="test-list">
 
-      ${state.tests.map(
-        test => `
+      ${state.tests
+        .map(
+          (test) => `
           <div class="card test-card">
 
             <span class="pill">
-              ${test.free
-                ? "مجاني"
-                : "Premium"}
+              ${
+                test.free
+                  ? "مجاني"
+                  : "Premium"
+              }
             </span>
 
             <h3>
-              ${escapeHTML(test.title)}
+              ${escapeHTML(
+                test.title
+              )}
             </h3>
 
             <p>
-              ${escapeHTML(test.desc)}
+              ${escapeHTML(
+                test.desc
+              )}
             </p>
 
             <button
@@ -1384,27 +1921,38 @@ function tests() {
 
           </div>
         `
-      ).join("")}
+        )
+        .join("")}
 
     </div>
   `);
 
   document
     .querySelectorAll(".startTest")
-    .forEach(button => {
+    .forEach((btn) => {
 
-      button.onclick = () =>
-        startTest(
-          button.dataset.id
-        );
+      btn.onclick = () => {
+
+        const test =
+          state.tests.find(
+            (x) =>
+              x.id ===
+              btn.dataset.id
+          );
+
+        if (!test) return;
+
+        startTest(test.id);
+      };
     });
 }
+
 
 function startTest(id) {
 
   currentTest =
     state.tests.find(
-      test => test.id === id
+      (x) => x.id === id
     );
 
   if (!currentTest) return;
@@ -1415,9 +1963,10 @@ function startTest(id) {
   showQuestion();
 }
 
+
 function showQuestion() {
 
-  const question =
+  const q =
     currentTest.qs[testIndex];
 
   const progress =
@@ -1449,11 +1998,13 @@ function showQuestion() {
         class="progress"
         style="margin-top:15px"
       >
-        <i style="width:${progress}%"></i>
+        <i
+          style="width:${progress}%"
+        ></i>
       </div>
 
       <h2 style="margin-top:20px">
-        ${escapeHTML(question)}
+        ${escapeHTML(q)}
       </h2>
 
       <div class="answers">
@@ -1484,20 +2035,26 @@ function showQuestion() {
 
   document
     .querySelectorAll("[data-score]")
-    .forEach(button => {
+    .forEach((btn) => {
 
-      button.onclick = () =>
+      btn.onclick = () => {
+
         answer(
           Number(
-            button.dataset.score
+            btn.dataset.score
           )
         );
+
+      };
+
     });
 }
+
 
 function answer(value) {
 
   testScore += value;
+
   testIndex++;
 
   if (
@@ -1509,6 +2066,7 @@ function answer(value) {
     showResult();
   }
 }
+
 
 function showResult() {
 
@@ -1523,14 +2081,20 @@ function showResult() {
   let message;
 
   if (percentage < 35) {
+
     message =
       "قد تكون علاقتك بنفسك بحاجة إلى مزيد من اللطف والاهتمام.";
+
   } else if (percentage < 70) {
+
     message =
       "لديكِ جوانب جيدة، وهناك مساحة جميلة لمزيد من الوعي والنمو.";
+
   } else {
+
     message =
       "لديكِ مؤشرات جيدة على علاقة أكثر دعمًا واحترامًا مع ذاتك.";
+
   }
 
   layout(`
@@ -1586,6 +2150,7 @@ function showResult() {
     () => tests();
 }
 
+
 /* =========================================================
    PROFILE
 ========================================================= */
@@ -1615,6 +2180,11 @@ function profile() {
         مرحبًا بكِ في مساحتكِ 🌷
       </h3>
 
+      <p>
+        يمكنك العودة إلى الاختبارات والمحتوى
+        والمحادثة في أي وقت.
+      </p>
+
       <button
         class="btn full"
         id="profileTests"
@@ -1626,10 +2196,11 @@ function profile() {
         class="btn secondary full"
         id="profileChat"
       >
-        محادثة Feminine Mind AI
+        محادثة Féminine Mind AI
       </button>
 
     </div>
+
 
     <div class="card">
 
@@ -1655,6 +2226,7 @@ function profile() {
 
     </div>
 
+
     <div class="card">
 
       <span class="pill">
@@ -1666,7 +2238,8 @@ function profile() {
       </h3>
 
       <p>
-        يمكنك من هنا الوصول إلى معلومات الجلسات.
+        يمكنك من هنا الوصول إلى معلومات الجلسات
+        وخيارات التواصل والحجز.
       </p>
 
       <button
@@ -1678,6 +2251,7 @@ function profile() {
 
     </div>
 
+
     <div class="card">
 
       <span class="pill premium">
@@ -1688,6 +2262,10 @@ function profile() {
         لوحة الإدارة
       </h3>
 
+      <p>
+        إدارة المقالات والتوكيدات والمنتجات والخدمات.
+      </p>
+
       <button
         class="btn full"
         id="adminPanel"
@@ -1697,6 +2275,7 @@ function profile() {
 
     </div>
 
+
     <div class="card">
 
       <h3>
@@ -1704,7 +2283,9 @@ function profile() {
       </h3>
 
       <p class="micro">
-        بيانات هذه النسخة تحفظ محليًا في المتصفح.
+        البيانات المحلية التي تحفظها المنصة
+        في هذا المتصفح تبقى في مساحة التخزين
+        المحلية للجهاز.
       </p>
 
       <button
@@ -1717,6 +2298,7 @@ function profile() {
     </div>
   `);
 
+
   $("#profileTests").onclick =
     () => go("tests");
 
@@ -1724,14 +2306,14 @@ function profile() {
     () => go("chat");
 
   $("#advancedContent").onclick =
-    advancedContent;
+    () => advancedContent();
 
   $("#bookingBtn").onclick =
-    bookingPage;
+    () => bookingPage();
 
   $("#adminPanel").onclick =
     () => {
-      location.href =
+      window.location.href =
         "admin.html";
     };
 
@@ -1745,8 +2327,10 @@ function profile() {
       toast(
         "تم مسح سجل المحادثة."
       );
+
     };
 }
+
 
 /* =========================================================
    ADVANCED CONTENT
@@ -1782,8 +2366,9 @@ function advancedContent() {
       </h3>
 
       <p>
-        الوعي الذاتي، الحدود، التعلق،
-        العلاقات وتنظيم المشاعر.
+        هذا القسم مخصص للمحتوى المتقدم في Féminine Mind:
+        الوعي الذاتي، الحدود، التعلق، العلاقات،
+        وتنظيم المشاعر.
       </p>
 
     </div>
@@ -1799,9 +2384,9 @@ function advancedContent() {
       </h3>
 
       <p>
-        ماذا حدث؟ ماذا شعرتِ؟
-        ماذا احتجتِ؟
-        وكيف يمكنك التعبير عن احتياجك؟
+        اكتبي موقفًا عاطفيًا يتكرر لديك، ثم حددي:
+        ماذا حدث؟ ماذا شعرتِ؟ ماذا احتجتِ؟
+        وما الطريقة الصحية للتعبير عن هذا الاحتياج؟
       </p>
 
       <textarea
@@ -1829,7 +2414,8 @@ function advancedContent() {
 
       const value =
         $("#advancedNote")
-          ?.value.trim();
+          ?.value
+          .trim();
 
       if (!value) {
         toast(
@@ -1846,14 +2432,19 @@ function advancedContent() {
       toast(
         "تم حفظ التأمل 🌷"
       );
+
     };
 }
+
 
 /* =========================================================
    BOOKING
 ========================================================= */
 
 function bookingPage() {
+
+  const servicesList =
+    getVisibleServices();
 
   layout(`
     <button
@@ -1872,52 +2463,86 @@ function bookingPage() {
       </h2>
     </div>
 
-    <div class="card">
+    ${
+      servicesList.length
+        ? `
+          ${servicesList.map(
+            (service) => `
+              <div class="card">
 
-      <span class="pill">
-        جلسات
-      </span>
+                <span class="pill">
+                  💗 خدمة
+                </span>
 
-      <h3>
-        احجزي جلستك
-      </h3>
+                <h3>
+                  ${escapeHTML(service.name)}
+                </h3>
 
-      <p>
-        هذا القسم مخصص لخدمات الجلسات
-        والتواصل مع المؤسسة.
-      </p>
+                <p>
+                  ${escapeHTML(service.description)}
+                </p>
 
-      <div class="banner">
-        سيتم ربط نظام الحجز الحقيقي
-        عند إضافة وسيلة الحجز الرسمية.
-      </div>
+                <button
+                  class="btn full bookingService"
+                  data-id="${escapeHTML(service.id)}"
+                >
+                  طلب هذه الخدمة
+                </button>
 
-      <button
-        class="btn full"
-        id="requestBooking"
-      >
-        طلب جلسة
-      </button>
+              </div>
+            `
+          ).join("")}
+        `
+        : `
+          <div class="card">
 
-    </div>
+            <p>
+              لا توجد خدمات منشورة حاليًا.
+            </p>
+
+          </div>
+        `
+    }
   `);
+
 
   $("#backProfileBooking").onclick =
     () => go("profile");
 
-  $("#requestBooking").onclick =
-    () => {
 
-      localStorage.setItem(
-        "fm_booking_request",
-        "requested"
-      );
+  document
+    .querySelectorAll(".bookingService")
+    .forEach((btn) => {
 
-      toast(
-        "تم تسجيل رغبتك في الحجز 🌷"
-      );
-    };
+      btn.onclick = () => {
+
+        const service =
+          getServices().find(
+            (item) =>
+              String(item.id) ===
+              String(btn.dataset.id)
+          );
+
+        if (!service) return;
+
+        localStorage.setItem(
+          "fm_booking_request",
+          JSON.stringify({
+            serviceId: service.id,
+            serviceName: service.name,
+            date: new Date().toISOString()
+          })
+        );
+
+        toast(
+          "تم تسجيل رغبتك في الحجز 🌷"
+        );
+
+      };
+
+    });
 }
+
 
 /* =========================================================
    RENDER
@@ -1933,7 +2558,9 @@ function render() {
     profile,
     exercise: exercisePage,
     advanced: advancedContent,
-    booking: bookingPage
+    booking: bookingPage,
+    store,
+    services
   };
 
   const page =
@@ -1942,6 +2569,7 @@ function render() {
 
   page();
 }
+
 
 /* =========================================================
    THEME
@@ -1953,28 +2581,31 @@ function toggleTheme() {
     "dark"
   );
 
-  const dark =
+  const isDark =
     document.body.classList.contains(
       "dark"
     );
 
   localStorage.setItem(
     "fm_dark",
-    dark ? "true" : "false"
+    isDark
+      ? "true"
+      : "false"
   );
 
   toast(
-    dark
+    isDark
       ? "تم تفعيل الوضع الليلي 🌙"
       : "تم تفعيل الوضع النهاري ☀️"
   );
 }
 
+
 /* =========================================================
    START
 ========================================================= */
 
-loadState();
+load();
 
 if (
   localStorage.getItem(
@@ -1995,6 +2626,7 @@ window.addEventListener(
       "home";
 
     render();
+
   }
 );
 
@@ -2004,3 +2636,4 @@ $("#themeBtn")?.addEventListener(
 );
 
 render();
+```
