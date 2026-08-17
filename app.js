@@ -1,12 +1,18 @@
 /* =========================================================
    FÉMININE MIND — APP.JS
-   Version corrigée
+   Unified Application Version
 ========================================================= */
 
-const $ = (s) => document.querySelector(s);
+const $ = selector =>
+  document.querySelector(selector);
+
+const STATE_KEY = "fm_state";
+const PRODUCTS_KEY = "fm_products";
 
 const state = {
-  route: location.hash.slice(1) || "home",
+
+  route:
+    location.hash.slice(1) || "home",
 
   articles: [
     {
@@ -15,7 +21,8 @@ const state = {
       cat: "الحدود النفسية",
       free: true,
       date: "هذا الأسبوع",
-      text: "عندما نربط قبول الآخرين لنا بمدى موافقتنا عليهم، تصبح الحدود صعبة. تعلمي أن تحمي احتياجاتك دون شعور بالذنب."
+      text:
+        "عندما نربط قبول الآخرين لنا بمدى موافقتنا عليهم، تصبح الحدود صعبة. تعلمي أن تحمي احتياجاتك دون شعور بالذنب."
     },
     {
       id: 2,
@@ -23,7 +30,8 @@ const state = {
       cat: "الوعي الذاتي",
       free: true,
       date: "هذا الأسبوع",
-      text: "إرضاء الآخرين قد يمنح راحة قصيرة، لكنه قد يبعدك تدريجيًا عن احتياجاتك وقيمك وحدودك."
+      text:
+        "إرضاء الآخرين قد يمنح راحة قصيرة، لكنه قد يبعدك تدريجيًا عن احتياجاتك وقيمك وحدودك."
     },
     {
       id: 3,
@@ -31,7 +39,8 @@ const state = {
       cat: "التعافي العاطفي",
       free: false,
       date: "Premium",
-      text: "الاحتواء العاطفي يساعد على بناء علاقة أكثر أمانًا، ويمنح المشاعر مساحة للفهم والتعبير."
+      text:
+        "الاحتواء العاطفي يساعد على بناء علاقة أكثر أمانًا، ويمنح المشاعر مساحة للفهم والتعبير."
     },
     {
       id: 4,
@@ -39,7 +48,8 @@ const state = {
       cat: "الحدود النفسية",
       free: true,
       date: "هذا الأسبوع",
-      text: "من العلامات المهمة الشعور المستمر بالاستنزاف، الموافقة رغم عدم الرغبة، والخوف المبالغ فيه من رفض الآخرين."
+      text:
+        "من العلامات المهمة الشعور المستمر بالاستنزاف، والموافقة رغم عدم الرغبة، والخوف المبالغ فيه من رفض الآخرين."
     },
     {
       id: 5,
@@ -47,7 +57,8 @@ const state = {
       cat: "العلاقات",
       free: false,
       date: "Premium",
-      text: "الأمان العاطفي لا يعني غياب الخلاف، بل القدرة على التعبير عن الاحتياجات والمشاعر مع وجود الاحترام والاحتواء."
+      text:
+        "الأمان العاطفي لا يعني غياب الخلاف، بل القدرة على التعبير عن الاحتياجات والمشاعر مع وجود الاحترام والاحتواء."
     }
   ],
 
@@ -65,31 +76,38 @@ const state = {
   exercises: [
     {
       title: "توقفي واسألي نفسك",
-      text: "ماذا أشعر الآن؟ ماذا أحتاج؟ وما الشيء الصغير الذي يمكنني فعله لنفسي اليوم؟"
+      text:
+        "ماذا أشعر الآن؟ ماذا أحتاج؟ وما الشيء الصغير الذي يمكنني فعله لنفسي اليوم؟"
     },
     {
       title: "حدودي اليوم",
-      text: "اكتبي موقفًا وافقتِ فيه رغم أنكِ كنتِ تريدين الرفض، ثم اكتبي كيف كنتِ تتمنين التعبير عن حدك."
+      text:
+        "اكتبي موقفًا وافقتِ فيه رغم أنكِ كنتِ تريدين الرفض، ثم اكتبي كيف كنتِ تتمنين التعبير عن حدك."
     },
     {
       title: "رسالة إلى الذات",
-      text: "اكتبي لنفسك رسالة قصيرة كما لو كنتِ تتحدثين إلى امرأة تحبينها وتريدين دعمها."
+      text:
+        "اكتبي لنفسك رسالة قصيرة كما لو كنتِ تتحدثين إلى امرأة تحبينها وتريدين دعمها."
     },
     {
       title: "ما الذي أحتاجه؟",
-      text: "اختاري شعورًا حاضرًا الآن واكتبي تحته: ماذا يحاول هذا الشعور أن يخبرني؟ وما الاحتياج الموجود خلفه؟"
+      text:
+        "اختاري شعورًا حاضرًا الآن واكتبي تحته: ماذا يحاول هذا الشعور أن يخبرني؟ وما الاحتياج الموجود خلفه؟"
     },
     {
       title: "مساحتي الخاصة",
-      text: "حددي شيئًا واحدًا يستنزف طاقتك، ثم اكتبي حدًا صغيرًا يمكنك وضعه هذا الأسبوع."
+      text:
+        "حددي شيئًا واحدًا يستنزف طاقتك، ثم اكتبي حدًا صغيرًا يمكنك وضعه هذا الأسبوع."
     },
     {
       title: "التوقف عن إرضاء الآخرين",
-      text: "اكتبي موقفًا فعلتِ فيه شيئًا فقط خوفًا من إزعاج شخص آخر. ماذا كنتِ تريدين فعلًا؟"
+      text:
+        "اكتبي موقفًا فعلتِ فيه شيئًا فقط خوفًا من إزعاج شخص آخر. ماذا كنتِ تريدين فعلًا؟"
     },
     {
       title: "حديث لطيف مع الذات",
-      text: "اكتبي ثلاث جمل لطيفة تحتاجين إلى سماعها اليوم، ثم اقرئيها ببطء."
+      text:
+        "اكتبي ثلاث جمل لطيفة تحتاجين إلى سماعها اليوم، ثم اقرئيها ببطء."
     }
   ],
 
@@ -149,14 +167,13 @@ const state = {
   ]
 };
 
-
 /* =========================================================
-   LOCAL STORAGE
+   STORAGE
 ========================================================= */
 
-function save() {
+function saveState() {
   localStorage.setItem(
-    "fm_state",
+    STATE_KEY,
     JSON.stringify({
       articles: state.articles,
       affirmations: state.affirmations
@@ -164,36 +181,55 @@ function save() {
   );
 }
 
-function load() {
+function loadState() {
   try {
-    const saved = JSON.parse(
-      localStorage.getItem("fm_state") || "null"
-    );
+    const saved =
+      JSON.parse(
+        localStorage.getItem(STATE_KEY) || "null"
+      );
 
-    if (saved) {
-      if (Array.isArray(saved.articles) && saved.articles.length) {
-        state.articles = saved.articles;
-      }
+    if (!saved) return;
 
-      if (
-        Array.isArray(saved.affirmations) &&
-        saved.affirmations.length
-      ) {
-        state.affirmations = saved.affirmations;
-      }
+    if (Array.isArray(saved.articles)) {
+      state.articles = saved.articles;
     }
-  } catch (e) {
-    console.log("FM state load skipped");
+
+    if (Array.isArray(saved.affirmations)) {
+      state.affirmations =
+        saved.affirmations;
+    }
+
+  } catch (error) {
+    console.log(
+      "FM state load skipped"
+    );
   }
 }
 
+function getProducts() {
+  try {
+    const products =
+      JSON.parse(
+        localStorage.getItem(
+          PRODUCTS_KEY
+        ) || "[]"
+      );
+
+    return Array.isArray(products)
+      ? products
+      : [];
+
+  } catch {
+    return [];
+  }
+}
 
 /* =========================================================
    HELPERS
 ========================================================= */
 
-function escapeHTML(text) {
-  return String(text || "")
+function escapeHTML(value) {
+  return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -202,18 +238,24 @@ function escapeHTML(text) {
 }
 
 function toast(message) {
-  const el = $("#toast");
+  const element = $("#toast");
 
-  if (!el) return;
+  if (!element) {
+    alert(message);
+    return;
+  }
 
-  el.textContent = message;
-  el.classList.add("show");
+  element.textContent = message;
+  element.classList.add("show");
 
-  clearTimeout(window.fmToastTimer);
+  clearTimeout(
+    window.fmToastTimer
+  );
 
-  window.fmToastTimer = setTimeout(() => {
-    el.classList.remove("show");
-  }, 2200);
+  window.fmToastTimer =
+    setTimeout(() => {
+      element.classList.remove("show");
+    }, 2200);
 }
 
 function go(route) {
@@ -236,71 +278,78 @@ function layout(html) {
   app.innerHTML = html;
 
   nav();
-
-  document
-    .querySelectorAll(".bottom-nav button")
-    .forEach((btn) => {
-      btn.classList.toggle(
-        "active",
-        btn.dataset.route === state.route
-      );
-    });
 }
 
 function nav() {
   document
-    .querySelectorAll(".bottom-nav button")
-    .forEach((btn) => {
-      btn.onclick = () => {
-        go(btn.dataset.route);
-      };
+    .querySelectorAll(
+      ".bottom-nav button"
+    )
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.route ===
+          state.route
+      );
+
+      button.onclick = () =>
+        go(button.dataset.route);
     });
 }
-
 
 /* =========================================================
    DAILY CONTENT
 ========================================================= */
 
+function getDayOfYear() {
+  const now = new Date();
+
+  const start =
+    new Date(
+      now.getFullYear(),
+      0,
+      1
+    );
+
+  return Math.floor(
+    (now - start) /
+      86400000
+  );
+}
+
 function getDailyIndex(length) {
   if (!length) return 0;
 
-  const start = new Date(
-    new Date().getFullYear(),
-    0,
-    0
-  );
-
-  const today = new Date();
-
-  const diff = today - start;
-
-  const day =
-    Math.floor(diff / 86400000);
-
-  return day % length;
+  return getDayOfYear() % length;
 }
 
 function getDailyAffirmation() {
   return state.affirmations[
-    getDailyIndex(state.affirmations.length)
+    getDailyIndex(
+      state.affirmations.length
+    )
   ];
 }
 
 function getDailyExercise() {
   return state.exercises[
-    getDailyIndex(state.exercises.length)
+    getDailyIndex(
+      state.exercises.length
+    )
   ];
 }
-
 
 /* =========================================================
    HOME
 ========================================================= */
 
 function home() {
-  const affirmation = getDailyAffirmation();
-  const exercise = getDailyExercise();
+  const affirmation =
+    getDailyAffirmation();
+
+  const exercise =
+    getDailyExercise();
 
   layout(`
     <section class="hero">
@@ -314,9 +363,8 @@ function home() {
       </h1>
 
       <p>
-        محتوى نفسي مبسط، وعي ذاتي، علاقات صحية،
-        وتمارين عملية تساعدك على فهم نفسك
-        والتعامل مع مشاعرك بوعي.
+        محتوى نفسي مبسط، وعي ذاتي،
+        علاقات صحية وتمارين عملية.
       </p>
 
     </section>
@@ -324,7 +372,7 @@ function home() {
     <section class="daily card">
 
       <span class="pill">
-        توكيد الصباح
+        توكيد اليوم 🌷
       </span>
 
       <p class="quote">
@@ -332,7 +380,7 @@ function home() {
       </p>
 
       <div class="banner">
-        🌷 توكيد اليوم يتغير تلقائيًا كل يوم.
+        يتغير التوكيد تلقائيًا كل يوم.
       </div>
 
     </section>
@@ -376,44 +424,36 @@ function home() {
         class="card action-card"
         data-go="chat"
       >
-        <span>💗</span>
+        💗
         <strong>المحادثة</strong>
-        <small>
-          تحدثي مع Feminine Mind AI
-        </small>
+        <small>تحدثي مع Feminine Mind AI</small>
       </button>
 
       <button
         class="card action-card"
         data-go="library"
       >
-        <span>📚</span>
+        📚
         <strong>المحتوى</strong>
-        <small>
-          مقالات وتمارين وتوكيدات
-        </small>
+        <small>مقالات وتمارين وتوكيدات</small>
       </button>
 
       <button
         class="card action-card"
         data-go="tests"
       >
-        <span>📝</span>
+        📝
         <strong>الاختبارات</strong>
-        <small>
-          اكتشفي نفسك بوعي
-        </small>
+        <small>اكتشفي نفسك بوعي</small>
       </button>
 
       <button
         class="card action-card"
         data-go="profile"
       >
-        <span>👤</span>
+        👤
         <strong>حسابي</strong>
-        <small>
-          مساحتك الشخصية
-        </small>
+        <small>مساحتك الشخصية</small>
       </button>
 
     </div>
@@ -421,27 +461,25 @@ function home() {
 
   document
     .querySelectorAll("[data-go]")
-    .forEach((btn) => {
-      btn.onclick = () => {
-        go(btn.dataset.go);
-      };
+    .forEach(button => {
+
+      button.onclick = () =>
+        go(button.dataset.go);
     });
 
   $("#dailyExerciseBtn")?.addEventListener(
     "click",
-    () => {
-      exercisePage();
-    }
+    exercisePage
   );
 }
 
-
 /* =========================================================
-   DAILY EXERCISE
+   EXERCISE
 ========================================================= */
 
 function exercisePage() {
-  const exercise = getDailyExercise();
+  const exercise =
+    getDailyExercise();
 
   layout(`
     <button
@@ -452,9 +490,7 @@ function exercisePage() {
     </button>
 
     <div class="section-title">
-      <h2>
-        تمرين اليوم 🌷
-      </h2>
+      <h2>تمرين اليوم 🌷</h2>
     </div>
 
     <article class="card">
@@ -473,8 +509,6 @@ function exercisePage() {
 
       <div class="banner">
         خذي من 5 إلى 10 دقائق لنفسك.
-        لا تبحثي عن الإجابة المثالية،
-        فقط كوني صادقة مع نفسك.
       </div>
 
       <textarea
@@ -494,27 +528,38 @@ function exercisePage() {
     </article>
   `);
 
-  $("#backHome").onclick = () => go("home");
+  $("#backHome").onclick =
+    () => go("home");
 
-  $("#saveExercise").onclick = () => {
-    const value =
-      $("#exerciseJournal")?.value.trim();
+  $("#saveExercise").onclick =
+    () => {
 
-    if (!value) {
-      toast("اكتبي شيئًا قبل الحفظ 🌷");
-      return;
-    }
+      const value =
+        $("#exerciseJournal")
+          ?.value.trim();
 
-    localStorage.setItem(
-      "fm_daily_exercise_" +
-        new Date().toISOString().slice(0, 10),
-      value
-    );
+      if (!value) {
+        toast(
+          "اكتبي شيئًا قبل الحفظ 🌷"
+        );
+        return;
+      }
 
-    toast("تم حفظ تأملكِ 🌷");
-  };
+      const today =
+        new Date()
+          .toISOString()
+          .slice(0, 10);
+
+      localStorage.setItem(
+        "fm_daily_exercise_" + today,
+        value
+      );
+
+      toast(
+        "تم حفظ تأملكِ 🌷"
+      );
+    };
 }
-
 
 /* =========================================================
    CHAT
@@ -540,22 +585,19 @@ function chat() {
         id="messages"
         class="messages"
       >
-
         <div class="msg ai">
           مرحبًا بكِ في Féminine Mind 🌷
           <br>
-          أنا هنا للاستماع إليكِ ومساعدتكِ
-          على فهم مشاعركِ وأفكاركِ بطريقة آمنة وهادئة.
+          أنا هنا للاستماع إليكِ.
         </div>
-
       </div>
 
       <div class="composer">
 
         <textarea
           id="chatInput"
-          placeholder="اكتبي ما يشغل بالك..."
           rows="3"
+          placeholder="اكتبي ما يشغل بالك..."
         ></textarea>
 
         <button
@@ -577,12 +619,13 @@ function chat() {
 
   $("#chatInput")?.addEventListener(
     "keydown",
-    (e) => {
+    event => {
+
       if (
-        e.key === "Enter" &&
-        !e.shiftKey
+        event.key === "Enter" &&
+        !event.shiftKey
       ) {
-        e.preventDefault();
+        event.preventDefault();
         sendChat();
       }
     }
@@ -594,17 +637,17 @@ function addMessage(text, type) {
 
   if (!box) return;
 
-  const div =
+  const message =
     document.createElement("div");
 
-  div.className =
+  message.className =
     `msg ${type}`;
 
-  div.innerHTML =
+  message.innerHTML =
     escapeHTML(text)
       .replace(/\n/g, "<br>");
 
-  box.appendChild(div);
+  box.appendChild(message);
 
   box.scrollTop =
     box.scrollHeight;
@@ -638,6 +681,7 @@ async function sendChat() {
     messages?.lastElementChild;
 
   try {
+
     const history =
       JSON.parse(
         localStorage.getItem(
@@ -670,7 +714,7 @@ async function sendChat() {
     if (!response.ok) {
       throw new Error(
         data.error ||
-        "حدث خطأ في الاتصال بالمساعد."
+        "حدث خطأ في الاتصال."
       );
     }
 
@@ -678,7 +722,7 @@ async function sendChat() {
       data.reply ||
       data.message ||
       data.text ||
-      "لم تصلني استجابة واضحة. حاولي مرة أخرى.";
+      "لم تصلني استجابة واضحة.";
 
     if (lastAI) {
       lastAI.innerHTML =
@@ -713,11 +757,10 @@ async function sendChat() {
 
     if (lastAI) {
       lastAI.textContent =
-        "تعذر الاتصال بالمساعد الآن. تأكدي من اتصال الإنترنت ثم حاولي مرة أخرى.";
+        "تعذر الاتصال بالمساعد الآن. حاولي مرة أخرى.";
     }
   }
 }
-
 
 /* =========================================================
    LIBRARY
@@ -744,7 +787,13 @@ function library() {
       <button
         data-tab="exercises"
       >
-        تمارين
+        التمارين
+      </button>
+
+      <button
+        data-tab="products"
+      >
+        المتجر
       </button>
 
     </div>
@@ -754,22 +803,22 @@ function library() {
 
   document
     .querySelectorAll("[data-tab]")
-    .forEach((btn) => {
+    .forEach(button => {
 
-      btn.onclick = () => {
+      button.onclick = () => {
 
         document
           .querySelectorAll("[data-tab]")
-          .forEach((x) =>
-            x.classList.remove(
+          .forEach(item =>
+            item.classList.remove(
               "active"
             )
           );
 
-        btn.classList.add("active");
+        button.classList.add("active");
 
         renderLibraryTab(
-          btn.dataset.tab
+          button.dataset.tab
         );
       };
     });
@@ -778,61 +827,140 @@ function library() {
 }
 
 function renderLibraryTab(tab) {
-
   const box =
     $("#libraryContent");
 
   if (!box) return;
 
+  /* ARTICLES */
 
-  /* =====================
-     AFFIRMATIONS
-  ===================== */
+  if (tab === "articles") {
+
+    box.innerHTML = `
+      <div class="section-title">
+        <h2>محتوى Féminine Mind</h2>
+      </div>
+
+      ${
+        state.articles.length
+          ? state.articles.map(article => `
+            <article class="card">
+
+              <span class="pill">
+                ${escapeHTML(article.cat)}
+              </span>
+
+              <h3>
+                ${escapeHTML(article.title)}
+              </h3>
+
+              <small>
+                ${escapeHTML(article.date)}
+              </small>
+
+              <p>
+                ${escapeHTML(article.text)}
+              </p>
+
+              <button
+                class="btn full ${
+                  article.free
+                    ? "readArticle"
+                    : "premiumArticle"
+                }"
+                data-id="${article.id}"
+              >
+                ${
+                  article.free
+                    ? "قراءة المقال"
+                    : "فتح المحتوى Premium 🔓"
+                }
+              </button>
+
+            </article>
+          `).join("")
+          : `
+            <div class="card">
+              لا توجد مقالات حاليًا.
+            </div>
+          `
+      }
+    `;
+
+    document
+      .querySelectorAll(
+        ".readArticle"
+      )
+      .forEach(button => {
+
+        button.onclick = () =>
+          openArticle(
+            button.dataset.id
+          );
+      });
+
+    document
+      .querySelectorAll(
+        ".premiumArticle"
+      )
+      .forEach(button => {
+
+        button.onclick = () =>
+          openArticle(
+            button.dataset.id,
+            true
+          );
+      });
+
+    return;
+  }
+
+  /* AFFIRMATIONS */
 
   if (tab === "affirmations") {
 
     box.innerHTML = `
       <div class="section-title">
-        <h2>
-          توكيداتك اليومية
-        </h2>
+        <h2>توكيداتك اليومية 🌷</h2>
       </div>
 
-      ${state.affirmations
-        .map(
-          (a, i) => `
-          <div class="card">
+      ${
+        state.affirmations.map(
+          (affirmation, index) => `
+            <div class="card">
 
-            <span class="pill">
-              توكيد ${i + 1}
-            </span>
+              <span class="pill">
+                توكيد ${index + 1}
+              </span>
 
-            <p class="quote">
-              ${escapeHTML(a)}
-            </p>
+              <p class="quote">
+                ${escapeHTML(affirmation)}
+              </p>
 
-            <button
-              class="btn secondary copyAff"
-              data-index="${i}"
-            >
-              نسخ التوكيد
-            </button>
+              <button
+                class="btn secondary copyAff"
+                data-index="${index}"
+              >
+                نسخ التوكيد
+              </button>
 
-          </div>
-        `
-        )
-        .join("")}
+            </div>
+          `
+        ).join("")
+      }
     `;
 
     document
       .querySelectorAll(".copyAff")
-      .forEach((btn) => {
+      .forEach(button => {
 
-        btn.onclick = async () => {
+        button.onclick = async () => {
 
           const text =
             state.affirmations[
-              Number(btn.dataset.index)
+              Number(
+                button.dataset.index
+              )
             ];
 
           try {
@@ -848,7 +976,7 @@ function renderLibraryTab(tab) {
           } catch {
 
             toast(
-              "يمكنك تحديد التوكيد ونسخه يدويًا."
+              "يمكنك نسخه يدويًا."
             );
           }
         };
@@ -857,10 +985,7 @@ function renderLibraryTab(tab) {
     return;
   }
 
-
-  /* =====================
-     EXERCISES
-  ===================== */
+  /* EXERCISES */
 
   if (tab === "exercises") {
 
@@ -871,19 +996,14 @@ function renderLibraryTab(tab) {
           تمارين العودة إلى الذات
         </h2>
 
-        <p class="micro">
-          اختاري تمرينًا يناسب احتياجك اليوم.
-        </p>
-
       </div>
 
-      ${state.exercises
-        .map(
-          (exercise, i) => `
+      ${state.exercises.map(
+        (exercise, index) => `
           <div class="card">
 
             <span class="pill">
-              تمرين ${String(i + 1).padStart(2, "0")}
+              تمرين ${index + 1}
             </span>
 
             <h3>
@@ -900,146 +1020,162 @@ function renderLibraryTab(tab) {
 
             <button
               class="btn full openExercise"
-              data-index="${i}"
+              data-index="${index}"
             >
               ابدئي التمرين
             </button>
 
           </div>
         `
-        )
-        .join("")}
+      ).join("")}
     `;
 
     document
-      .querySelectorAll(".openExercise")
-      .forEach((btn) => {
+      .querySelectorAll(
+        ".openExercise"
+      )
+      .forEach(button => {
 
-        btn.onclick = () => {
-
+        button.onclick = () =>
           exerciseDetails(
             Number(
-              btn.dataset.index
+              button.dataset.index
             )
+          );
+      });
+
+    return;
+  }
+
+  /* PRODUCTS */
+
+  if (tab === "products") {
+
+    const products =
+      getProducts().filter(
+        product =>
+          product.visible !== false &&
+          product.status !== "archived"
+      );
+
+    box.innerHTML = `
+      <div class="section-title">
+
+        <h2>
+          متجر Féminine Mind 🛍️
+        </h2>
+
+        <p class="micro">
+          المنتجات المتاحة في المنصة.
+        </p>
+
+      </div>
+
+      ${
+        products.length
+          ? products.map(product => `
+            <div class="card">
+
+              <span class="pill">
+                ${escapeHTML(product.type)}
+              </span>
+
+              <h3>
+                ${escapeHTML(product.name)}
+              </h3>
+
+              <p>
+                ${escapeHTML(product.description)}
+              </p>
+
+              ${
+                Number(product.oldPrice) > 0
+                  ? `
+                    <p>
+                      <s>
+                        ${Number(
+                          product.oldPrice
+                        ).toLocaleString("fr-FR")}
+                      </s>
+                    </p>
+                  `
+                  : ""
+              }
+
+              <h3>
+                ${Number(
+                  product.price || 0
+                ).toLocaleString("fr-FR")}
+              </h3>
+
+              <button
+                class="btn full productOpen"
+                data-slug="${escapeHTML(
+                  product.slug || ""
+                )}"
+              >
+                فتح المنتج
+              </button>
+
+            </div>
+          `).join("")
+          : `
+            <div class="card">
+              لا توجد منتجات منشورة حاليًا.
+            </div>
+          `
+      }
+    `;
+
+    document
+      .querySelectorAll(
+        ".productOpen"
+      )
+      .forEach(button => {
+
+        button.onclick = () => {
+
+          const product =
+            products.find(
+              item =>
+                String(item.slug) ===
+                String(
+                  button.dataset.slug
+                )
+            );
+
+          if (!product) return;
+
+          toast(
+            "صفحة المنتج قيد التطوير 🌷"
           );
         };
       });
 
     return;
   }
-
-
-  /* =====================
-     ARTICLES
-  ===================== */
-
-  box.innerHTML = `
-    <div class="section-title">
-
-      <h2>
-        محتوى Féminine Mind
-      </h2>
-
-    </div>
-
-    ${state.articles
-      .map(
-        (article) => `
-        <article class="card">
-
-          <span class="pill">
-            ${escapeHTML(
-              article.cat
-            )}
-          </span>
-
-          <h3>
-            ${escapeHTML(
-              article.title
-            )}
-          </h3>
-
-          <small>
-            ${escapeHTML(
-              article.date
-            )}
-          </small>
-
-          <p>
-            ${escapeHTML(
-              article.text
-            )}
-          </p>
-
-          ${
-            article.free
-              ? `
-                <button
-                  class="btn full readArticle"
-                  data-id="${article.id}"
-                >
-                  قراءة المقال
-                </button>
-              `
-              : `
-                <button
-                  class="btn full premiumArticle"
-                  data-id="${article.id}"
-                >
-                  فتح المحتوى Premium 🔓
-                </button>
-              `
-          }
-
-        </article>
-      `
-      )
-      .join("")}
-  `;
-
-
-  document
-    .querySelectorAll(".readArticle")
-    .forEach((btn) => {
-
-      btn.onclick = () => {
-
-        openArticle(
-          Number(
-            btn.dataset.id
-          )
-        );
-      };
-    });
-
-
-  document
-    .querySelectorAll(".premiumArticle")
-    .forEach((btn) => {
-
-      btn.onclick = () => {
-
-        openArticle(
-          Number(
-            btn.dataset.id
-          ),
-          true
-        );
-      };
-    });
 }
 
-function openArticle(id, premium = false) {
+/* =========================================================
+   ARTICLE
+========================================================= */
+
+function openArticle(
+  id,
+  premium = false
+) {
 
   const article =
     state.articles.find(
-      (x) =>
-        Number(x.id) ===
-        Number(id)
+      item =>
+        String(item.id) ===
+        String(id)
     );
 
   if (!article) {
-    toast("لم يتم العثور على المقال.");
+    toast(
+      "لم يتم العثور على المقال."
+    );
     return;
   }
 
@@ -1057,27 +1193,19 @@ function openArticle(id, premium = false) {
     >
 
       <span class="pill">
-        ${escapeHTML(
-          article.cat
-        )}
+        ${escapeHTML(article.cat)}
       </span>
 
       <h1>
-        ${escapeHTML(
-          article.title
-        )}
+        ${escapeHTML(article.title)}
       </h1>
 
       <small>
-        ${escapeHTML(
-          article.date
-        )}
+        ${escapeHTML(article.date)}
       </small>
 
       <p style="margin-top:20px">
-        ${escapeHTML(
-          article.text
-        )}
+        ${escapeHTML(article.text)}
       </p>
 
       ${
@@ -1085,29 +1213,25 @@ function openArticle(id, premium = false) {
           ? `
             <div class="banner">
               ✨ هذا محتوى Premium.
-              تم فتحه الآن في النسخة الحالية
-              لمتابعة اختبار وظائف المنصة.
             </div>
 
             <p>
               الاحتواء العاطفي يعني أن تكون المشاعر
               قادرة على الظهور داخل العلاقة دون خوف
               مستمر من الرفض أو السخرية أو التجاهل.
-              عندما نشعر بالأمان يمكننا التعبير عن
-              احتياجاتنا بشكل أكثر وضوحًا.
             </p>
 
             <p>
               اسألي نفسك:
               هل أشعر أنني أستطيع أن أكون نفسي
-              داخل علاقاتي؟ وهل أستطيع طلب ما أحتاجه
-              دون أن أشعر أن قيمتي مهددة؟
+              داخل علاقاتي؟
             </p>
           `
           : `
             <p>
-              خذي وقتكِ في قراءة الفكرة، ثم اسألي نفسك:
-              كيف تظهر هذه الفكرة في حياتي وعلاقاتي؟
+              خذي وقتكِ في قراءة الفكرة،
+              ثم اسألي نفسك:
+              كيف تظهر هذه الفكرة في حياتي؟
             </p>
           `
       }
@@ -1118,6 +1242,10 @@ function openArticle(id, premium = false) {
   $("#backLibrary").onclick =
     () => library();
 }
+
+/* =========================================================
+   EXERCISE DETAILS
+========================================================= */
 
 function exerciseDetails(index) {
 
@@ -1180,8 +1308,7 @@ function exerciseDetails(index) {
 
       const value =
         $("#exerciseNote")
-          ?.value
-          .trim();
+          ?.value.trim();
 
       if (!value) {
         toast(
@@ -1191,8 +1318,7 @@ function exerciseDetails(index) {
       }
 
       localStorage.setItem(
-        "fm_exercise_note_" +
-          index,
+        "fm_exercise_note_" + index,
         value
       );
 
@@ -1201,7 +1327,6 @@ function exerciseDetails(index) {
       );
     };
 }
-
 
 /* =========================================================
    TESTS
@@ -1221,36 +1346,29 @@ function tests() {
       </h2>
 
       <p class="micro">
-        اختبارات للتأمل وفهم الذات، وليست تشخيصًا طبيًا.
+        للتأمل وفهم الذات وليست تشخيصًا طبيًا.
       </p>
 
     </div>
 
     <div class="test-list">
 
-      ${state.tests
-        .map(
-          (test) => `
+      ${state.tests.map(
+        test => `
           <div class="card test-card">
 
             <span class="pill">
-              ${
-                test.free
-                  ? "مجاني"
-                  : "Premium"
-              }
+              ${test.free
+                ? "مجاني"
+                : "Premium"}
             </span>
 
             <h3>
-              ${escapeHTML(
-                test.title
-              )}
+              ${escapeHTML(test.title)}
             </h3>
 
             <p>
-              ${escapeHTML(
-                test.desc
-              )}
+              ${escapeHTML(test.desc)}
             </p>
 
             <button
@@ -1266,34 +1384,19 @@ function tests() {
 
           </div>
         `
-        )
-        .join("")}
+      ).join("")}
 
     </div>
   `);
 
   document
     .querySelectorAll(".startTest")
-    .forEach((btn) => {
+    .forEach(button => {
 
-      btn.onclick = () => {
-
-        const test =
-          state.tests.find(
-            (x) =>
-              x.id ===
-              btn.dataset.id
-          );
-
-        if (!test) return;
-
-        /*
-          في هذه النسخة يتم فتح Premium
-          حتى يستطيع صاحب المنصة اختبار الوظيفة.
-        */
-
-        startTest(test.id);
-      };
+      button.onclick = () =>
+        startTest(
+          button.dataset.id
+        );
     });
 }
 
@@ -1301,7 +1404,7 @@ function startTest(id) {
 
   currentTest =
     state.tests.find(
-      (x) => x.id === id
+      test => test.id === id
     );
 
   if (!currentTest) return;
@@ -1314,7 +1417,7 @@ function startTest(id) {
 
 function showQuestion() {
 
-  const q =
+  const question =
     currentTest.qs[testIndex];
 
   const progress =
@@ -1346,13 +1449,11 @@ function showQuestion() {
         class="progress"
         style="margin-top:15px"
       >
-        <i
-          style="width:${progress}%"
-        ></i>
+        <i style="width:${progress}%"></i>
       </div>
 
       <h2 style="margin-top:20px">
-        ${escapeHTML(q)}
+        ${escapeHTML(question)}
       </h2>
 
       <div class="answers">
@@ -1383,23 +1484,20 @@ function showQuestion() {
 
   document
     .querySelectorAll("[data-score]")
-    .forEach((btn) => {
+    .forEach(button => {
 
-      btn.onclick = () => {
-
+      button.onclick = () =>
         answer(
           Number(
-            btn.dataset.score
+            button.dataset.score
           )
         );
-      };
     });
 }
 
 function answer(value) {
 
   testScore += value;
-
   testIndex++;
 
   if (
@@ -1425,17 +1523,12 @@ function showResult() {
   let message;
 
   if (percentage < 35) {
-
     message =
       "قد تكون علاقتك بنفسك بحاجة إلى مزيد من اللطف والاهتمام.";
-
   } else if (percentage < 70) {
-
     message =
       "لديكِ جوانب جيدة، وهناك مساحة جميلة لمزيد من الوعي والنمو.";
-
   } else {
-
     message =
       "لديكِ مؤشرات جيدة على علاقة أكثر دعمًا واحترامًا مع ذاتك.";
   }
@@ -1493,7 +1586,6 @@ function showResult() {
     () => tests();
 }
 
-
 /* =========================================================
    PROFILE
 ========================================================= */
@@ -1523,11 +1615,6 @@ function profile() {
         مرحبًا بكِ في مساحتكِ 🌷
       </h3>
 
-      <p>
-        يمكنك العودة إلى الاختبارات والمحتوى
-        والمحادثة في أي وقت.
-      </p>
-
       <button
         class="btn full"
         id="profileTests"
@@ -1543,7 +1630,6 @@ function profile() {
       </button>
 
     </div>
-
 
     <div class="card">
 
@@ -1569,7 +1655,6 @@ function profile() {
 
     </div>
 
-
     <div class="card">
 
       <span class="pill">
@@ -1581,8 +1666,7 @@ function profile() {
       </h3>
 
       <p>
-        يمكنك من هنا الوصول إلى معلومات الجلسات
-        وخيارات التواصل والحجز.
+        يمكنك من هنا الوصول إلى معلومات الجلسات.
       </p>
 
       <button
@@ -1593,6 +1677,7 @@ function profile() {
       </button>
 
     </div>
+
     <div class="card">
 
       <span class="pill premium">
@@ -1602,10 +1687,6 @@ function profile() {
       <h3>
         لوحة الإدارة
       </h3>
-
-      <p>
-        إدارة المقالات والتوكيدات ومحتوى المنصة.
-      </p>
 
       <button
         class="btn full"
@@ -1623,9 +1704,7 @@ function profile() {
       </h3>
 
       <p class="micro">
-        البيانات المحلية التي تحفظها المنصة
-        في هذا المتصفح تبقى في مساحة التخزين
-        المحلية للجهاز.
+        بيانات هذه النسخة تحفظ محليًا في المتصفح.
       </p>
 
       <button
@@ -1645,14 +1724,17 @@ function profile() {
     () => go("chat");
 
   $("#advancedContent").onclick =
-    () => advancedContent();
+    advancedContent;
 
   $("#bookingBtn").onclick =
-    () => bookingPage();
+    bookingPage;
+
   $("#adminPanel").onclick =
     () => {
-      window.location.href = "admin.html";
+      location.href =
+        "admin.html";
     };
+
   $("#clearChat").onclick =
     () => {
 
@@ -1665,7 +1747,6 @@ function profile() {
       );
     };
 }
-
 
 /* =========================================================
    ADVANCED CONTENT
@@ -1701,9 +1782,8 @@ function advancedContent() {
       </h3>
 
       <p>
-        هذا القسم مخصص للمحتوى المتقدم في Féminine Mind:
-        الوعي الذاتي، الحدود، التعلق، العلاقات،
-        وتنظيم المشاعر.
+        الوعي الذاتي، الحدود، التعلق،
+        العلاقات وتنظيم المشاعر.
       </p>
 
     </div>
@@ -1719,9 +1799,9 @@ function advancedContent() {
       </h3>
 
       <p>
-        اكتبي موقفًا عاطفيًا يتكرر لديك، ثم حددي:
-        ماذا حدث؟ ماذا شعرتِ؟ ماذا احتجتِ؟
-        وما الطريقة الصحية للتعبير عن هذا الاحتياج؟
+        ماذا حدث؟ ماذا شعرتِ؟
+        ماذا احتجتِ؟
+        وكيف يمكنك التعبير عن احتياجك؟
       </p>
 
       <textarea
@@ -1749,8 +1829,7 @@ function advancedContent() {
 
       const value =
         $("#advancedNote")
-          ?.value
-          .trim();
+          ?.value.trim();
 
       if (!value) {
         toast(
@@ -1769,7 +1848,6 @@ function advancedContent() {
       );
     };
 }
-
 
 /* =========================================================
    BOOKING
@@ -1805,14 +1883,13 @@ function bookingPage() {
       </h3>
 
       <p>
-        هذا القسم مخصص لعرض خدمات الجلسات
-        وطريقة التواصل مع المؤسسة.
+        هذا القسم مخصص لخدمات الجلسات
+        والتواصل مع المؤسسة.
       </p>
 
       <div class="banner">
-        سيتم ربط نموذج الحجز الحقيقي
-        بوسيلة التواصل أو نظام المواعيد
-        عند إضافة بيانات الحجز الرسمية.
+        سيتم ربط نظام الحجز الحقيقي
+        عند إضافة وسيلة الحجز الرسمية.
       </div>
 
       <button
@@ -1831,17 +1908,16 @@ function bookingPage() {
   $("#requestBooking").onclick =
     () => {
 
-      toast(
-        "تم تسجيل رغبتك في الحجز 🌷"
-      );
-
       localStorage.setItem(
         "fm_booking_request",
         "requested"
       );
+
+      toast(
+        "تم تسجيل رغبتك في الحجز 🌷"
+      );
     };
 }
-
 
 /* =========================================================
    RENDER
@@ -1867,7 +1943,6 @@ function render() {
   page();
 }
 
-
 /* =========================================================
    THEME
 ========================================================= */
@@ -1878,31 +1953,28 @@ function toggleTheme() {
     "dark"
   );
 
-  const isDark =
+  const dark =
     document.body.classList.contains(
       "dark"
     );
 
   localStorage.setItem(
     "fm_dark",
-    isDark
-      ? "true"
-      : "false"
+    dark ? "true" : "false"
   );
 
   toast(
-    isDark
+    dark
       ? "تم تفعيل الوضع الليلي 🌙"
       : "تم تفعيل الوضع النهاري ☀️"
   );
 }
 
-
 /* =========================================================
    START
 ========================================================= */
 
-load();
+loadState();
 
 if (
   localStorage.getItem(
