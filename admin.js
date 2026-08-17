@@ -1,75 +1,106 @@
+/* =========================================================
+   FÉMININE MIND — ADMIN DASHBOARD
+   Founder / Admin
+   إدارة المحتوى + المنتجات + الخدمات
+========================================================= */
+
 const root = document.querySelector("#admin");
+
 const KEY = "fm_state";
 const PRODUCTS_KEY = "fm_products";
+const SERVICES_KEY = "fm_services";
 
-/* =========================
-   FOUNDER PROFILE
-========================= */
-
-const founder = {
-  role: "Founder / Admin",
-  brand: "Féminine Mind",
-  website: "https://f-mind.netlify.app/",
-  email: "",
-  phone: "",
-  country: ""
-};
-
-/* =========================
-   DEFAULT PRODUCTS
-========================= */
+/* =========================================================
+   DEFAULT DATA
+========================================================= */
 
 const defaultProducts = [
   {
-    id: 1,
-    type: "دورات",
-    title: "الدورات التدريبية",
-    description: "برامج تدريبية متكاملة في الوعي الذاتي والعلاقات والأنوثة.",
+    id: "courses",
+    name: "الدورات التدريبية",
+    type: "دورة تدريبية",
+    description:
+      "برامج تدريبية متكاملة في الوعي الذاتي والعلاقات والأنوثة.",
     price: 0,
     oldPrice: 0,
-    access: "مدفوع",
-    status: "مسودة"
+    access: "paid",
+    status: "draft"
   },
   {
-    id: 2,
-    type: "كتب",
-    title: "الكتب الإلكترونية",
-    description: "كتب رقمية تساعد المرأة على فهم ذاتها وبناء حياة أكثر وعيًا.",
+    id: "books",
+    name: "الكتب الإلكترونية",
+    type: "كتاب إلكتروني",
+    description:
+      "كتب رقمية تساعد المرأة على فهم ذاتها وبناء حياة أكثر وعيًا.",
     price: 0,
     oldPrice: 0,
-    access: "مدفوع",
-    status: "مسودة"
+    access: "paid",
+    status: "draft"
   },
   {
-    id: 3,
-    type: "Workbooks",
-    title: "الملفات والـ Workbooks",
-    description: "ملفات وتمارين عملية قابلة للتحميل والاستخدام.",
+    id: "workbooks",
+    name: "الملفات والـ Workbooks",
+    type: "Workbook",
+    description:
+      "ملفات وتمارين عملية قابلة للتحميل والاستخدام.",
     price: 0,
     oldPrice: 0,
-    access: "مدفوع",
-    status: "مسودة"
+    access: "paid",
+    status: "draft"
   },
   {
-    id: 4,
+    id: "premium",
+    name: "عضوية Premium",
     type: "Premium",
-    title: "عضوية Premium",
-    description: "محتوى وتجارب متقدمة ومزايا خاصة للمشتركات.",
+    description:
+      "محتوى وتجارب متقدمة ومزايا خاصة للمشتركات.",
     price: 0,
     oldPrice: 0,
-    access: "Premium",
-    status: "مسودة"
+    access: "premium",
+    status: "draft"
   }
 ];
 
-/* =========================
-   STORAGE
-========================= */
+const defaultServices = [
+  {
+    id: "individual",
+    name: "الجلسات الفردية",
+    description: "جلسات فردية لدعم الوعي الذاتي والنمو الشخصي.",
+    status: "جاهز للتوسع"
+  },
+  {
+    id: "relationships",
+    name: "جلسات العلاقات",
+    description:
+      "جلسات متخصصة لفهم العلاقات والاحتياجات والحدود.",
+    status: "جاهز للتوسع"
+  },
+  {
+    id: "workshops",
+    name: "ورش العمل",
+    description:
+      "ورش وبرامج جماعية حول الوعي الذاتي والعلاقات والأنوثة.",
+    status: "جاهز للتوسع"
+  },
+  {
+    id: "packages",
+    name: "الباقات والبرامج",
+    description:
+      "برامج متكاملة تجمع بين المحتوى والتدريب والجلسات.",
+    status: "جاهز للتوسع"
+  }
+];
 
-function get() {
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function getState() {
   try {
     return (
-      JSON.parse(localStorage.getItem(KEY)) || {
+      JSON.parse(
+        localStorage.getItem(KEY)
+      ) || {
         articles: [],
         affirmations: []
       }
@@ -82,24 +113,33 @@ function get() {
   }
 }
 
-function save(data) {
-  localStorage.setItem(KEY, JSON.stringify(data));
+function saveState(data) {
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(data)
+  );
 }
 
 function getProducts() {
   try {
     const saved = JSON.parse(
-      localStorage.getItem(PRODUCTS_KEY) || "null"
+      localStorage.getItem(PRODUCTS_KEY)
     );
 
-    if (Array.isArray(saved)) {
+    if (
+      Array.isArray(saved) &&
+      saved.length
+    ) {
       return saved;
     }
+  } catch {}
 
-    return defaultProducts;
-  } catch {
-    return defaultProducts;
-  }
+  localStorage.setItem(
+    PRODUCTS_KEY,
+    JSON.stringify(defaultProducts)
+  );
+
+  return [...defaultProducts];
 }
 
 function saveProducts(products) {
@@ -109,35 +149,67 @@ function saveProducts(products) {
   );
 }
 
-/* =========================
-   ESCAPE HTML
-========================= */
+function getServices() {
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(SERVICES_KEY)
+    );
+
+    if (
+      Array.isArray(saved) &&
+      saved.length
+    ) {
+      return saved;
+    }
+  } catch {}
+
+  localStorage.setItem(
+    SERVICES_KEY,
+    JSON.stringify(defaultServices)
+  );
+
+  return [...defaultServices];
+}
+
+/* =========================================================
+   HELPERS
+========================================================= */
 
 function esc(value) {
-  return String(value || "").replace(
-    /[&<>"']/g,
-    char =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[char])
+  return String(value || "")
+    .replace(/[&<>"']/g, (m) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[m]));
+}
+
+function money(value) {
+  const number = Number(value || 0);
+
+  return number.toLocaleString(
+    "fr-FR"
   );
 }
 
-/* =========================
+/* =========================================================
    LOGIN
-========================= */
+========================================================= */
 
-if (sessionStorage.getItem("fm_admin") !== "1") {
+if (
+  sessionStorage.getItem(
+    "fm_admin"
+  ) !== "1"
+) {
   showLogin();
 } else {
   dashboard();
 }
 
 function showLogin() {
+
   root.innerHTML = `
     <div class="hero">
 
@@ -150,7 +222,8 @@ function showLogin() {
       </h1>
 
       <p>
-        هذه لوحة الإدارة التجريبية للمؤسسة.
+        هذه المساحة مخصصة لإدارة محتوى
+        ومنتجات وخدمات Féminine Mind.
       </p>
 
       <div class="field">
@@ -163,7 +236,7 @@ function showLogin() {
           class="input"
           id="pass"
           type="password"
-          placeholder="أدخلي الرمز"
+          placeholder="أدخلي رمز الدخول"
         >
 
       </div>
@@ -172,63 +245,75 @@ function showLogin() {
         class="btn full"
         id="loginBtn"
       >
-        دخول لوحة الإدارة
+        دخول إلى لوحة الإدارة
       </button>
 
       <button
         class="btn secondary full"
-        id="backHome"
+        id="backPlatform"
       >
-        العودة للمنصة
+        العودة إلى المنصة
       </button>
 
     </div>
   `;
 
-  document.querySelector("#loginBtn").onclick = login;
+  document
+    .querySelector("#loginBtn")
+    .onclick = login;
 
-  document.querySelector("#backHome").onclick = () => {
-    location.href = "index.html";
-  };
+  document
+    .querySelector("#backPlatform")
+    .onclick = () => {
+      location.href = "index.html";
+    };
 
-  document.querySelector("#pass").addEventListener(
-    "keydown",
-    event => {
-      if (event.key === "Enter") {
-        login();
+  document
+    .querySelector("#pass")
+    .addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === "Enter") {
+          login();
+        }
       }
-    }
-  );
+    );
 }
 
 function login() {
-  const input = document.querySelector("#pass");
 
-  if (!input) return;
+  const password =
+    document.querySelector("#pass")
+      ?.value;
 
-  if (input.value === "FEMININE") {
-    sessionStorage.setItem("fm_admin", "1");
+  if (
+    password === "FEMININE"
+  ) {
+
+    sessionStorage.setItem(
+      "fm_admin",
+      "1"
+    );
+
     dashboard();
+
   } else {
-    alert("رمز الدخول غير صحيح.");
+
+    alert(
+      "رمز الدخول غير صحيح."
+    );
   }
 }
 
-/* =========================
+/* =========================================================
    DASHBOARD
-========================= */
+========================================================= */
 
 function dashboard() {
-  const state = get();
+
+  const state = getState();
   const products = getProducts();
-
-  const articleCount = Array.isArray(state.articles)
-    ? state.articles.length
-    : 0;
-
-  const affirmationCount = Array.isArray(state.affirmations)
-    ? state.affirmations.length
-    : 0;
+  const services = getServices();
 
   root.innerHTML = `
 
@@ -239,52 +324,48 @@ function dashboard() {
       </span>
 
       <h1>
-        لوحة إدارة Féminine Mind
+        ملف المؤسسة
       </h1>
 
       <p>
-        مركز إدارة المحتوى والمنتجات والخدمات
-        ومصادر الدخل المستقبلية للمشروع.
+        مساحة الإدارة الرئيسية لـ
+        Féminine Mind.
       </p>
 
     </div>
 
 
-    <!-- FOUNDER PROFILE -->
+    <!-- PROFILE -->
 
     <div class="section-title">
-      <h2>👑 ملف المؤسسة</h2>
+      <h2>
+        👑 معلومات المؤسسة
+      </h2>
     </div>
 
     <div class="card">
 
       <span class="pill premium">
-        ${esc(founder.role)}
+        Founder / Admin
       </span>
 
       <h3>
-        ${esc(founder.brand)}
+        Féminine Mind
       </h3>
 
       <p>
-        العلامة:
-        <strong>${esc(founder.brand)}</strong>
+        <strong>العلامة:</strong>
+        Féminine Mind
       </p>
 
       <p>
-        الصفة:
-        <strong>${esc(founder.role)}</strong>
+        <strong>الصفة:</strong>
+        Founder / Admin
       </p>
 
       <p>
-        رابط المنصة:
-        <a
-          href="${esc(founder.website)}"
-          target="_blank"
-          rel="noopener"
-        >
-          ${esc(founder.website)}
-        </a>
+        <strong>رابط المنصة:</strong>
+        f-mind.netlify.app
       </p>
 
     </div>
@@ -293,33 +374,67 @@ function dashboard() {
     <!-- OVERVIEW -->
 
     <div class="section-title">
-      <h2>📊 نظرة عامة</h2>
+      <h2>
+        📊 نظرة عامة
+      </h2>
     </div>
 
     <div class="grid">
 
       <div class="card">
-        <span class="pill">المقالات</span>
-        <h3>${articleCount}</h3>
-        <p>عدد المقالات الحالية</p>
+        <span class="pill">
+          المقالات
+        </span>
+
+        <h2>
+          ${state.articles.length}
+        </h2>
+
+        <p>
+          عدد المقالات الحالية
+        </p>
       </div>
 
       <div class="card">
-        <span class="pill">التوكيدات</span>
-        <h3>${affirmationCount}</h3>
-        <p>عدد التوكيدات الحالية</p>
+        <span class="pill">
+          التوكيدات
+        </span>
+
+        <h2>
+          ${state.affirmations.length}
+        </h2>
+
+        <p>
+          عدد التوكيدات الحالية
+        </p>
       </div>
 
       <div class="card">
-        <span class="pill premium">المنتجات</span>
-        <h3>${products.length}</h3>
-        <p>عدد المنتجات في المتجر</p>
+        <span class="pill">
+          المنتجات
+        </span>
+
+        <h2>
+          ${products.length}
+        </h2>
+
+        <p>
+          عدد المنتجات في المتجر
+        </p>
       </div>
 
       <div class="card">
-        <span class="pill">الخدمات</span>
-        <h3>4</h3>
-        <p>خدمات قابلة للتحويل إلى مصادر دخل</p>
+        <span class="pill">
+          الخدمات
+        </span>
+
+        <h2>
+          ${services.length}
+        </h2>
+
+        <p>
+          خدمات قابلة للتحويل إلى مصادر دخل
+        </p>
       </div>
 
     </div>
@@ -328,17 +443,19 @@ function dashboard() {
     <!-- STORE -->
 
     <div class="section-title">
-      <h2>🛍️ متجر Féminine Mind</h2>
+      <h2>
+        🛍️ متجر Féminine Mind
+      </h2>
     </div>
 
     <div class="card">
 
       <p>
-        من هنا يمكنكِ إدارة المنتجات الرقمية التي
-        سيتم عرضها وبيعها مستقبلًا داخل المنصة.
+        من هنا يمكنكِ إدارة المنتجات الرقمية
+        التي سيتم عرضها وبيعها مستقبلًا داخل المنصة.
       </p>
 
-      <span class="pill premium">
+      <span class="pill">
         متجر جاهز للتطوير
       </span>
 
@@ -348,40 +465,65 @@ function dashboard() {
     <!-- ADD PRODUCT -->
 
     <div class="section-title">
-      <h2>➕ إضافة منتج</h2>
+      <h2>
+        ➕ إضافة منتج
+      </h2>
     </div>
 
     <div class="card">
 
       <div class="field">
-        <label>اسم المنتج</label>
+
+        <label>
+          اسم المنتج
+        </label>
 
         <input
-          id="productTitle"
+          id="productName"
           class="input"
           placeholder="مثال: دورة حب الذات"
         >
+
       </div>
 
 
       <div class="field">
-        <label>نوع المنتج</label>
+
+        <label>
+          نوع المنتج
+        </label>
 
         <select
           id="productType"
           class="input"
         >
-          <option value="دورات">🎓 دورة تدريبية</option>
-          <option value="كتب">📚 كتاب إلكتروني</option>
-          <option value="Workbooks">📄 Workbook</option>
-          <option value="Premium">💎 Premium</option>
-          <option value="باقات">🎁 باقة</option>
+
+          <option value="دورة تدريبية">
+            🎓 دورة تدريبية
+          </option>
+
+          <option value="كتاب إلكتروني">
+            📚 كتاب إلكتروني
+          </option>
+
+          <option value="Workbook">
+            📄 Workbook
+          </option>
+
+          <option value="Premium">
+            💎 Premium
+          </option>
+
         </select>
+
       </div>
 
 
       <div class="field">
-        <label>وصف المنتج</label>
+
+        <label>
+          وصف المنتج
+        </label>
 
         <textarea
           id="productDescription"
@@ -389,11 +531,15 @@ function dashboard() {
           rows="4"
           placeholder="اكتبي وصفًا مختصرًا للمنتج..."
         ></textarea>
+
       </div>
 
 
       <div class="field">
-        <label>السعر</label>
+
+        <label>
+          السعر
+        </label>
 
         <input
           id="productPrice"
@@ -402,11 +548,15 @@ function dashboard() {
           min="0"
           placeholder="مثال: 2500"
         >
+
       </div>
 
 
       <div class="field">
-        <label>السعر قبل الخصم</label>
+
+        <label>
+          السعر قبل الخصم
+        </label>
 
         <input
           id="productOldPrice"
@@ -415,39 +565,69 @@ function dashboard() {
           min="0"
           placeholder="اختياري"
         >
+
       </div>
 
 
       <div class="field">
-        <label>نوع الوصول</label>
+
+        <label>
+          نوع الوصول
+        </label>
 
         <select
           id="productAccess"
           class="input"
         >
-          <option value="مدفوع">💰 مدفوع</option>
-          <option value="مجاني">🆓 مجاني</option>
-          <option value="Premium">💎 Premium</option>
+
+          <option value="paid">
+            💰 مدفوع
+          </option>
+
+          <option value="free">
+            🆓 مجاني
+          </option>
+
+          <option value="premium">
+            💎 Premium
+          </option>
+
         </select>
+
       </div>
 
 
       <div class="field">
-        <label>حالة المنتج</label>
+
+        <label>
+          حالة المنتج
+        </label>
 
         <select
           id="productStatus"
           class="input"
         >
-          <option value="مسودة">مسودة</option>
-          <option value="منشور">منشور</option>
+
+          <option value="draft">
+            مسودة
+          </option>
+
+          <option value="published">
+            منشور
+          </option>
+
+          <option value="archived">
+            مؤرشف
+          </option>
+
         </select>
+
       </div>
 
 
       <button
         class="btn full"
-        id="addProductBtn"
+        id="saveProduct"
       >
         حفظ المنتج
       </button>
@@ -458,81 +638,76 @@ function dashboard() {
     <!-- PRODUCTS -->
 
     <div class="section-title">
-      <h2>📦 المنتجات الحالية</h2>
+      <h2>
+        📦 المنتجات الحالية
+      </h2>
     </div>
 
     <div class="list">
 
       ${
-        products.length
-          ? products
-              .map(
-                product => `
-                  <div class="card">
+        products
+          .map(
+            (product) => `
+              <div class="card">
 
-                    <span class="pill">
-                      ${esc(product.type)}
-                    </span>
+                <span class="pill">
+                  ${esc(product.type)}
+                </span>
 
-                    <h3>
-                      ${esc(product.title)}
-                    </h3>
+                <h3>
+                  ${esc(product.name)}
+                </h3>
 
-                    <p>
-                      ${esc(product.description)}
-                    </p>
+                <p>
+                  ${esc(product.description)}
+                </p>
 
-                    <p>
-                      السعر:
-                      <strong>
-                        ${Number(product.price || 0)}
-                      </strong>
-                    </p>
+                <p>
+                  <strong>
+                    السعر:
+                  </strong>
+                  ${money(product.price)}
+                </p>
 
-                    ${
-                      Number(product.oldPrice || 0) > 0
-                        ? `
-                          <p>
-                            السعر السابق:
-                            <del>
-                              ${Number(product.oldPrice)}
-                            </del>
-                          </p>
-                        `
-                        : ""
-                    }
+                ${
+                  Number(product.oldPrice) > 0
+                    ? `
+                      <p>
+                        <strong>
+                          السعر قبل الخصم:
+                        </strong>
+                        ${money(product.oldPrice)}
+                      </p>
+                    `
+                    : ""
+                }
 
-                    <p>
-                      الوصول:
-                      ${esc(product.access)}
-                    </p>
+                <p>
+                  <strong>
+                    الوصول:
+                  </strong>
+                  ${esc(product.access)}
+                </p>
 
-                    <span class="pill ${
-                      product.status === "منشور"
-                        ? ""
-                        : "premium"
-                    }">
-                      ${esc(product.status)}
-                    </span>
+                <p>
+                  <strong>
+                    الحالة:
+                  </strong>
+                  ${esc(product.status)}
+                </p>
 
-                    <button
-                      class="btn secondary full deleteProduct"
-                      data-id="${product.id}"
-                    >
-                      🗑️ حذف المنتج
-                    </button>
+                <button
+                  class="btn secondary full deleteProduct"
+                  data-id="${esc(product.id)}"
+                >
+                  🗑️ حذف المنتج
+                </button>
 
-                  </div>
-                `
-              )
-              .join("")
-          : `
-            <div class="card">
-              <p>
-                لا توجد منتجات.
-              </p>
-            </div>
-          `
+              </div>
+            `
+          )
+          .join("")
       }
 
     </div>
@@ -541,95 +716,87 @@ function dashboard() {
     <!-- SERVICES -->
 
     <div class="section-title">
-      <h2>💗 الخدمات المدفوعة</h2>
+      <h2>
+        💗 الخدمات المدفوعة
+      </h2>
     </div>
 
-    <div class="list">
+    <div class="grid">
 
-      <div class="card">
-        <h3>💗 الجلسات الفردية</h3>
-        <span class="pill">جاهز للتوسع</span>
-      </div>
+      ${
+        services
+          .map(
+            (service) => `
+              <div class="card">
 
-      <div class="card">
-        <h3>💑 جلسات العلاقات</h3>
-        <span class="pill">جاهز للتوسع</span>
-      </div>
+                <span class="pill">
+                  💗 خدمة
+                </span>
 
-      <div class="card">
-        <h3>👩‍🏫 ورش العمل</h3>
-        <span class="pill">جاهز للتوسع</span>
-      </div>
+                <h3>
+                  ${esc(service.name)}
+                </h3>
 
-      <div class="card">
-        <h3>🎁 الباقات والبرامج</h3>
-        <span class="pill">جاهز للتوسع</span>
-      </div>
+                <p>
+                  ${esc(service.description)}
+                </p>
+
+                <span class="pill">
+                  ${esc(service.status)}
+                </span>
+
+              </div>
+            `
+          )
+          .join("")
+      }
 
     </div>
 
 
-    <!-- REVENUE -->
+    <!-- INCOME -->
 
     <div class="section-title">
-      <h2>💎 مصادر الدخل المقترحة</h2>
+      <h2>
+        💎 مصادر الدخل المقترحة
+      </h2>
     </div>
 
     <div class="card">
 
-      <p>
-        🎓 الدورات التدريبية
-      </p>
-
-      <p>
-        📚 الكتب الإلكترونية
-      </p>
-
-      <p>
-        📄 Workbooks والملفات
-      </p>
-
-      <p>
-        💎 اشتراك Premium
-      </p>
-
-      <p>
-        💗 الجلسات الفردية
-      </p>
-
-      <p>
-        💑 جلسات العلاقات
-      </p>
-
-      <p>
-        👩‍🏫 ورش العمل والبرامج الجماعية
-      </p>
-
-      <p>
-        🎁 الباقات والعروض
-      </p>
-
-      <p>
-        🤝 التسويق بالعمولة مستقبلًا
-      </p>
+      <p>🎓 الدورات التدريبية</p>
+      <p>📚 الكتب الإلكترونية</p>
+      <p>📄 Workbooks والملفات</p>
+      <p>💎 اشتراك Premium</p>
+      <p>💗 الجلسات الفردية</p>
+      <p>💑 جلسات العلاقات</p>
+      <p>👩‍🏫 ورش العمل والبرامج الجماعية</p>
+      <p>🎁 الباقات والعروض</p>
+      <p>🤝 التسويق بالعمولة مستقبلًا</p>
 
     </div>
 
 
-    <!-- CONTENT -->
+    <!-- ARTICLES -->
 
     <div class="section-title">
-      <h2>📝 إدارة المحتوى</h2>
+      <h2>
+        📝 إدارة المحتوى
+      </h2>
     </div>
 
 
     <div class="card">
 
-      <h3>إضافة مقال</h3>
+      <h3>
+        إضافة مقال
+      </h3>
 
       <div class="field">
 
-        <label>العنوان</label>
+        <label>
+          العنوان
+        </label>
 
         <input
           id="title"
@@ -642,7 +809,9 @@ function dashboard() {
 
       <div class="field">
 
-        <label>التصنيف</label>
+        <label>
+          التصنيف
+        </label>
 
         <input
           id="cat"
@@ -655,7 +824,9 @@ function dashboard() {
 
       <div class="field">
 
-        <label>المحتوى</label>
+        <label>
+          المحتوى
+        </label>
 
         <textarea
           id="text"
@@ -668,21 +839,18 @@ function dashboard() {
 
 
       <label>
-
         <input
           type="checkbox"
           id="free"
           checked
         >
-
         محتوى مجاني
-
       </label>
 
 
       <button
         class="btn full"
-        id="addArticleBtn"
+        id="saveArticle"
       >
         حفظ المقال
       </button>
@@ -690,9 +858,13 @@ function dashboard() {
     </div>
 
 
+    <!-- AFFIRMATIONS -->
+
     <div class="card">
 
-      <h3>إضافة توكيد</h3>
+      <h3>
+        إضافة توكيد
+      </h3>
 
       <input
         id="affirm"
@@ -702,7 +874,7 @@ function dashboard() {
 
       <button
         class="btn full"
-        id="addAffirmBtn"
+        id="saveAffirm"
       >
         حفظ التوكيد
       </button>
@@ -710,19 +882,21 @@ function dashboard() {
     </div>
 
 
-    <!-- ARTICLES -->
+    <!-- CURRENT ARTICLES -->
 
     <div class="section-title">
-      <h2>📚 المقالات الحالية</h2>
+      <h2>
+        📚 المقالات الحالية
+      </h2>
     </div>
 
     <div class="list">
 
       ${
-        state.articles && state.articles.length
+        state.articles.length
           ? state.articles
               .map(
-                article => `
+                (article) => `
                   <div class="card">
 
                     <span class="pill">
@@ -742,10 +916,10 @@ function dashboard() {
                     </p>
 
                     <button
-                      class="btn secondary deleteArticle"
+                      class="btn secondary full deleteArticle"
                       data-id="${article.id}"
                     >
-                      حذف المقال
+                      🗑️ حذف المقال
                     </button>
 
                   </div>
@@ -753,52 +927,63 @@ function dashboard() {
               )
               .join("")
           : `
-            <div class="card">
-              <p>
-                لا توجد مقالات إضافية مضافة من لوحة الإدارة.
-              </p>
-            </div>
-          `
+              <div class="card">
+
+                <p>
+                  لا توجد مقالات إضافية مضافة
+                  من لوحة الإدارة.
+                </p>
+
+              </div>
+            `
       }
 
     </div>
 
 
-    <!-- FUTURE -->
+    <!-- ROADMAP -->
 
     <div class="section-title">
-      <h2>🚀 مراحل تحقيق الدخل</h2>
+      <h2>
+        🚀 مراحل تحقيق الدخل
+      </h2>
     </div>
 
     <div class="card">
 
       <p>
-        ✅ المرحلة الحالية: بناء المحتوى والهوية والمنصة.
+        ✅ المرحلة الحالية:
+        بناء المحتوى والهوية والمنصة.
       </p>
 
       <p>
-        🔜 المرحلة التالية: بناء متجر المنتجات الرقمية.
+        🔜 المرحلة التالية:
+        بناء متجر المنتجات الرقمية.
       </p>
 
       <p>
-        🔜 بعدها: صفحات بيع الدورات والكتب والـWorkbooks.
+        🔜 بعدها:
+        صفحات بيع الدورات والكتب والـWorkbooks.
       </p>
 
       <p>
-        🔜 بعدها: نظام الاشتراكات والعضوية Premium.
+        🔜 بعدها:
+        نظام الاشتراكات والعضوية Premium.
       </p>
 
       <p>
-        🔜 ثم: نظام الدفع والحجوزات والفواتير.
+        🔜 ثم:
+        نظام الدفع والحجوزات والفواتير.
       </p>
 
       <p>
-        🔜 ثم: لوحة المبيعات والإيرادات والتحليلات.
+        🔜 ثم:
+        لوحة المبيعات والإيرادات والتحليلات.
       </p>
 
-      <span class="pill premium">
+      <div class="banner">
         قيد التطوير
-      </span>
+      </div>
 
     </div>
 
@@ -807,222 +992,218 @@ function dashboard() {
 
     <button
       class="btn secondary full"
-      id="logoutBtn"
+      id="logout"
     >
       تسجيل الخروج
     </button>
 
     <button
       class="btn full"
-      id="homeBtn"
+      id="backHome"
     >
       العودة إلى المنصة
     </button>
 
   `;
 
-  bindDashboard();
-}
 
-/* =========================
-   EVENTS
-========================= */
-
-function bindDashboard() {
+  /* =======================================================
+     EVENTS
+  ======================================================= */
 
   document
-    .querySelector("#addProductBtn")
-    ?.addEventListener(
-      "click",
-      addProduct
-    );
-
-  document
-    .querySelector("#addArticleBtn")
-    ?.addEventListener(
-      "click",
-      addArticle
-    );
-
-  document
-    .querySelector("#addAffirmBtn")
-    ?.addEventListener(
-      "click",
-      addAffirm
-    );
-
-  document
-    .querySelector("#logoutBtn")
-    ?.addEventListener(
-      "click",
-      () => {
-        sessionStorage.removeItem("fm_admin");
-        location.reload();
-      }
-    );
-
-  document
-    .querySelector("#homeBtn")
-    ?.addEventListener(
-      "click",
-      () => {
-        location.href = "index.html";
-      }
-    );
-
+    .querySelector("#saveProduct")
+    .onclick = addProduct;
 
   document
     .querySelectorAll(".deleteProduct")
-    .forEach(button => {
+    .forEach((btn) => {
 
-      button.addEventListener(
-        "click",
-        () => {
+      btn.onclick = () => {
 
-          const id =
-            Number(button.dataset.id);
+        deleteProduct(
+          btn.dataset.id
+        );
 
-          deleteProduct(id);
-
-        }
-      );
+      };
 
     });
+
+
+  document
+    .querySelector("#saveArticle")
+    .onclick = addArticle;
+
+  document
+    .querySelector("#saveAffirm")
+    .onclick = addAffirm;
 
 
   document
     .querySelectorAll(".deleteArticle")
-    .forEach(button => {
+    .forEach((btn) => {
 
-      button.addEventListener(
-        "click",
-        () => {
+      btn.onclick = () => {
 
-          const id =
-            Number(button.dataset.id);
+        deleteArticle(
+          Number(
+            btn.dataset.id
+          )
+        );
 
-          deleteArticle(id);
-
-        }
-      );
+      };
 
     });
+
+
+  document
+    .querySelector("#logout")
+    .onclick = () => {
+
+      sessionStorage.removeItem(
+        "fm_admin"
+      );
+
+      showLogin();
+
+    };
+
+
+  document
+    .querySelector("#backHome")
+    .onclick = () => {
+
+      location.href =
+        "index.html";
+
+    };
 }
 
-/* =========================
-   ADD PRODUCT
-========================= */
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
 
 function addProduct() {
 
-  const title =
+  const name =
     document
-      .querySelector("#productTitle")
+      .querySelector("#productName")
       ?.value
       .trim();
 
-  const type =
-    document
-      .querySelector("#productType")
-      ?.value;
+  if (!name) {
 
-  const description =
-    document
-      .querySelector("#productDescription")
-      ?.value
-      .trim();
-
-  const price =
-    Number(
-      document
-        .querySelector("#productPrice")
-        ?.value || 0
+    alert(
+      "اكتبي اسم المنتج أولًا."
     );
 
-  const oldPrice =
-    Number(
-      document
-        .querySelector("#productOldPrice")
-        ?.value || 0
-    );
-
-  const access =
-    document
-      .querySelector("#productAccess")
-      ?.value;
-
-  const status =
-    document
-      .querySelector("#productStatus")
-      ?.value;
-
-
-  if (!title) {
-    alert("اكتبي اسم المنتج أولًا.");
     return;
   }
 
-  if (!description) {
-    alert("اكتبي وصف المنتج أولًا.");
-    return;
-  }
-
-
-  const products = getProducts();
+  const products =
+    getProducts();
 
   products.unshift({
 
-    id: Date.now(),
+    id:
+      "product-" +
+      Date.now(),
 
-    type,
+    name,
 
-    title,
+    type:
+      document
+        .querySelector("#productType")
+        ?.value ||
+      "منتج رقمي",
 
-    description,
+    description:
+      document
+        .querySelector(
+          "#productDescription"
+        )
+        ?.value
+        .trim() ||
+      "منتج رقمي من Féminine Mind.",
 
-    price,
+    price:
+      Number(
+        document
+          .querySelector(
+            "#productPrice"
+          )
+          ?.value || 0
+      ),
 
-    oldPrice,
+    oldPrice:
+      Number(
+        document
+          .querySelector(
+            "#productOldPrice"
+          )
+          ?.value || 0
+      ),
 
-    access,
+    access:
+      document
+        .querySelector(
+          "#productAccess"
+        )
+        ?.value ||
+      "paid",
 
-    status
+    status:
+      document
+        .querySelector(
+          "#productStatus"
+        )
+        ?.value ||
+      "draft"
 
   });
 
+  saveProducts(products);
+
+  alert(
+    "تم حفظ المنتج بنجاح 🌷"
+  );
+
+  dashboard();
+}
+
+
+function deleteProduct(id) {
+
+  if (
+    !confirm(
+      "هل تريدين حذف هذا المنتج؟"
+    )
+  ) {
+    return;
+  }
+
+  const products =
+    getProducts().filter(
+      (product) =>
+        String(product.id) !==
+        String(id)
+    );
 
   saveProducts(products);
 
   dashboard();
 }
 
-/* =========================
-   DELETE PRODUCT
-========================= */
 
-function deleteProduct(id) {
-
-  const products =
-    getProducts();
-
-  const updated =
-    products.filter(
-      product =>
-        product.id !== id
-    );
-
-  saveProducts(updated);
-
-  dashboard();
-}
-
-/* =========================
-   ADD ARTICLE
-========================= */
+/* =========================================================
+   ARTICLES
+========================================================= */
 
 function addArticle() {
 
-  const state = get();
+  const state =
+    getState();
 
   const title =
     document
@@ -1048,58 +1229,84 @@ function addArticle() {
       ?.checked;
 
 
-  if (!title) {
-    alert("اكتبي عنوان المقال أولًا.");
-    return;
-  }
-
-  if (!text) {
-    alert("اكتبي محتوى المقال أولًا.");
-    return;
-  }
-
-
   state.articles.unshift({
 
-    id: Date.now(),
+    id:
+      Date.now(),
 
-    title,
+    title:
+      title ||
+      "مقال جديد",
 
     cat:
       cat ||
       "الوعي الذاتي",
 
-    free,
+    free:
+      Boolean(free),
 
     date:
       "أضيف من الإدارة",
 
-    text
+    text:
+      text ||
+      "اكتبي المحتوى هنا."
 
   });
 
 
-  save(state);
+  saveState(state);
+
+  alert(
+    "تم حفظ المقال بنجاح 🌷"
+  );
 
   dashboard();
 }
 
-/* =========================
-   ADD AFFIRMATION
-========================= */
+
+function deleteArticle(id) {
+
+  if (
+    !confirm(
+      "هل تريدين حذف هذا المقال؟"
+    )
+  ) {
+    return;
+  }
+
+  const state =
+    getState();
+
+  state.articles =
+    state.articles.filter(
+      (article) =>
+        Number(article.id) !==
+        Number(id)
+    );
+
+  saveState(state);
+
+  dashboard();
+}
+
+
+/* =========================================================
+   AFFIRMATIONS
+========================================================= */
 
 function addAffirm() {
 
-  const state = get();
+  const state =
+    getState();
 
   const input =
-    document.querySelector("#affirm");
-
-  if (!input) return;
+    document.querySelector(
+      "#affirm"
+    );
 
   const value =
-    input.value.trim();
-
+    input?.value.trim();
 
   if (!value) {
 
@@ -1110,31 +1317,15 @@ function addAffirm() {
     return;
   }
 
-
   state.affirmations.unshift(
     value
   );
 
-  save(state);
+  saveState(state);
 
-  dashboard();
-}
-
-/* =========================
-   DELETE ARTICLE
-========================= */
-
-function deleteArticle(id) {
-
-  const state = get();
-
-  state.articles =
-    state.articles.filter(
-      article =>
-        article.id !== id
-    );
-
-  save(state);
+  alert(
+    "تم حفظ التوكيد بنجاح 🌷"
+  );
 
   dashboard();
 }
