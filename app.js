@@ -1593,7 +1593,28 @@ function profile() {
       </button>
 
     </div>
+    <div class="card">
 
+      <span class="pill premium">
+        Founder Admin
+      </span>
+
+      <h3>
+        لوحة الإدارة
+      </h3>
+
+      <p>
+        إدارة المقالات والتوكيدات ومحتوى المنصة.
+      </p>
+
+      <button
+        class="btn full"
+        id="adminPanel"
+      >
+        👑 فتح لوحة الإدارة
+      </button>
+
+    </div>
 
     <div class="card">
 
@@ -1628,7 +1649,10 @@ function profile() {
 
   $("#bookingBtn").onclick =
     () => bookingPage();
-
+  $("#adminPanel").onclick =
+    () => {
+      window.location.href = "admin.html";
+    };
   $("#clearChat").onclick =
     () => {
 
